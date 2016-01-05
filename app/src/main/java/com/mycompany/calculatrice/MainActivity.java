@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.Stack;
+
 public class MainActivity extends AppCompatActivity {
 
     private LinearLayout mainll;
@@ -24,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout ll10;
 
     private TextView tv;
+    private Stack stack;
+    private boolean dot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         tv = (TextView) findViewById(R.id.textView);
+        stack = new Stack(); //enable the clear feature to remove exactly the right number of character(s)
+        dot = false;
 
         mainll = (LinearLayout) findViewById(R.id.mainLayoutContainer);
         ll1 = (LinearLayout) findViewById(R.id.line1);
@@ -183,63 +189,101 @@ public class MainActivity extends AppCompatActivity {
                     repopulateLayout(0);
                     break;
                 case R.id.button0:
-                    tv.append("0 ");
+                    tv.append("0");
+                    stack.push(1);
                     break;
                 case R.id.button1:
-                    tv.append("1 ");
+                    tv.append("1");
+                    stack.push(1);
                     break;
                 case R.id.button2:
-                    tv.append("2 ");
+                    tv.append("2");
+                    stack.push(1);
                     break;
                 case R.id.button3:
-                    tv.append("3 ");
+                    tv.append("3");
+                    stack.push(1);
                     break;
                 case R.id.button4:
-                    tv.append("4 ");
+                    tv.append("4");
+                    stack.push(1);
                     break;
                 case R.id.button5:
-                    tv.append("5 ");
+                    tv.append("5");
+                    stack.push(1);
                     break;
                 case R.id.button6:
-                    tv.append("6 ");
+                    tv.append("6");
+                    stack.push(1);
                     break;
                 case R.id.button7:
-                    tv.append("7 ");
+                    tv.append("7");
+                    stack.push(1);
                     break;
                 case R.id.button8:
-                    tv.append("8 ");
+                    tv.append("8");
+                    stack.push(1);
                     break;
                 case R.id.button9:
-                    tv.append("9 ");
+                    tv.append("9");
+                    stack.push(1);
                     break;
                 case R.id.buttonAC:
                     tv.setText("");
+                    stack.empty();
                     break;
                 case R.id.buttonAC2:
                     tv.setText("");
+                    stack.empty();
                     break;
                 case R.id.buttonC:
-                    if(!tv.getText().toString().isEmpty()) tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - 2));
+                    if(!tv.getText().toString().isEmpty()) tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - ((int)stack.pop())));
                     break;
                 case R.id.buttonC2:
-                    if(!tv.getText().toString().isEmpty()) tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - 2));
+                    if(!tv.getText().toString().isEmpty()) tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - ((int)stack.pop())));
                     break;
                 case R.id.buttondot:
-                    tv.append(". ");
+                    if((int)stack.peek()<3 && dot == false){ //prevent double dot in a number
+                        tv.append(" . ");
+                        dot = true;
+                        stack.push(3);
+                    }
                     break;
                 case R.id.buttonpercent:
                     break;
                 case R.id.buttondivision:
-                    tv.append("/ ");
+                    dot = false;
+                    if(tv.getText().toString().endsWith(" . ")) tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - ((int)stack.pop())));
+                    if((int)stack.peek()<3){
+                        tv.append(" / ");
+                        stack.push(3);
+                    }
+
                     break;
                 case R.id.buttonmul:
-                    tv.append("x ");
+                    dot = false;
+                    if(tv.getText().toString().endsWith(" . ")) tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - ((int)stack.pop())));
+                    if((int)stack.peek()<3){
+                        tv.append(" x ");
+                        stack.push(3);
+                    }
+
                     break;
                 case R.id.buttonminus:
-                    tv.append("- ");
+                    dot = false;
+                    if(tv.getText().toString().endsWith(" . ")) tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - ((int)stack.pop())));
+                    if((int)stack.peek()<3){
+                        tv.append(" - ");
+                        stack.push(3);
+                    }
                     break;
                 case R.id.buttonplus:
-                    tv.append("+ ");
+                    dot = false;
+                    if(tv.getText().toString().endsWith(" . ")) tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - ((int)stack.pop())));
+                    if((int)stack.peek()<3){
+                        tv.append(" + ");
+                        stack.push(3);
+                    }
                     break;
                 default:
                     break;
