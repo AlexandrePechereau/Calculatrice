@@ -137,10 +137,10 @@ public class MainActivity extends AppCompatActivity {
         Button buttondec = (Button) findViewById(R.id.buttondec);
         buttondec.setOnClickListener(myButtonListener);
 
-        Button buttonrootsquare = (Button) findViewById(R.id.buttonrootsquare);
-        buttonrootsquare.setOnClickListener(myButtonListener);
+        Button buttonsquareroot = (Button) findViewById(R.id.buttonsquareroot);
+        buttonsquareroot.setOnClickListener(myButtonListener);
 
-        Button buttonexposant = (Button) findViewById(R.id.buttonexposant);
+        Button buttonexposant = (Button) findViewById(R.id.buttonsquareroot);
         buttonexposant.setOnClickListener(myButtonListener);
 
         Button buttoncos = (Button) findViewById(R.id.buttoncos);
@@ -149,8 +149,8 @@ public class MainActivity extends AppCompatActivity {
         Button buttonhex = (Button) findViewById(R.id.buttonhex);
         buttonhex.setOnClickListener(myButtonListener);
 
-        Button buttonmul10exposant = (Button) findViewById(R.id.buttonmul10exposant);
-        buttonmul10exposant.setOnClickListener(myButtonListener);
+        Button buttonplusorminus = (Button) findViewById(R.id.buttonplusorminus);
+        buttonplusorminus.setOnClickListener(myButtonListener);
 
         Button buttoneexp = (Button) findViewById(R.id.buttoneexp);
         buttoneexp.setOnClickListener(myButtonListener);
@@ -161,13 +161,13 @@ public class MainActivity extends AppCompatActivity {
         Button buttonbin = (Button) findViewById(R.id.buttonbin);
         buttonbin.setOnClickListener(myButtonListener);
 
-        Button buttonsinminus1 = (Button) findViewById(R.id.buttonsinminus1);
+        Button buttonsinminus1 = (Button) findViewById(R.id.buttonarcsin);
         buttonsinminus1.setOnClickListener(myButtonListener);
 
-        Button buttoncosminus1 = (Button) findViewById(R.id.buttoncosminus1);
+        Button buttoncosminus1 = (Button) findViewById(R.id.buttonarccos);
         buttoncosminus1.setOnClickListener(myButtonListener);
 
-        Button buttontanminus1 = (Button) findViewById(R.id.buttontanminus1);
+        Button buttontanminus1 = (Button) findViewById(R.id.buttonarctan);
         buttontanminus1.setOnClickListener(myButtonListener);
 
         mainll.removeView(ll6);
@@ -249,40 +249,245 @@ public class MainActivity extends AppCompatActivity {
                         stack.push(3);
                     }
                     break;
-                case R.id.buttonpercent:
+                case R.id.buttonplusorminus:
+                    if(tv.getText().toString().isEmpty() ||((int)stack.peek() > 1)){
+                        tv.append("-");
+                        stack.push(1);
+                    }
                     break;
                 case R.id.buttondivision:
                     dot = false;
-                    if(tv.getText().toString().endsWith(" . ")) tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - ((int)stack.pop())));
-                    if((int)stack.peek()<3){
-                        tv.append(" / ");
-                        stack.push(3);
+                    if(tv.getText().toString().endsWith(" . ")) {
+                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - ((int)stack.pop())));
                     }
-
+                    if(!tv.getText().toString().isEmpty()){
+                        if((int)stack.peek() < 2 && !tv.getText().toString().endsWith("-")){
+                            tv.append(" / ");
+                            stack.push(3);
+                        }
+                    }
                     break;
                 case R.id.buttonmul:
                     dot = false;
-                    if(tv.getText().toString().endsWith(" . ")) tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - ((int)stack.pop())));
-                    if((int)stack.peek()<3){
-                        tv.append(" x ");
-                        stack.push(3);
+                    if(tv.getText().toString().endsWith(" . ")) {
+                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - ((int)stack.pop())));
                     }
-
+                    if(!tv.getText().toString().isEmpty()){
+                        if((int)stack.peek() < 2 && !tv.getText().toString().endsWith("-")){
+                            tv.append(" x ");
+                            stack.push(3);
+                        }
+                    }
                     break;
                 case R.id.buttonminus:
                     dot = false;
-                    if(tv.getText().toString().endsWith(" . ")) tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - ((int)stack.pop())));
-                    if((int)stack.peek()<3){
-                        tv.append(" - ");
-                        stack.push(3);
+                    if(tv.getText().toString().endsWith(" . ")) {
+                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - ((int)stack.pop())));
+                    }
+                    if(!tv.getText().toString().isEmpty()){
+                        if((int)stack.peek() < 2 && !tv.getText().toString().endsWith("-")){
+                            tv.append(" - ");
+                            stack.push(3);
+                        }
                     }
                     break;
                 case R.id.buttonplus:
                     dot = false;
-                    if(tv.getText().toString().endsWith(" . ")) tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - ((int)stack.pop())));
-                    if((int)stack.peek()<3){
-                        tv.append(" + ");
-                        stack.push(3);
+                    if(tv.getText().toString().endsWith(" . ")) {
+                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - ((int)stack.pop())));
+                    }
+                    if(!tv.getText().toString().isEmpty()){
+                        if((int)stack.peek() < 2 && !tv.getText().toString().endsWith("-")){
+                            tv.append(" + ");
+                            stack.push(3);
+                        }
+                    }
+                    break;
+                case R.id.buttonlog:
+                    if(tv.getText().toString().endsWith(" . ")) {
+                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - ((int)stack.pop())));
+                    }
+                    if(!tv.getText().toString().isEmpty()){
+                        if(((int)stack.peek() == 1 && !tv.getText().toString().endsWith("-")) || tv.getText().toString().endsWith(" ) ")){
+                            tv.append(" x log( ");
+                            stack.push(8);
+                        }
+                        else{
+                            tv.append("log( ");
+                            stack.push(5);
+                        }
+                    }
+                    break;
+                case R.id.buttonln:
+                    if(tv.getText().toString().endsWith(" . ")) {
+                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - ((int)stack.pop())));
+                    }
+                    if(!tv.getText().toString().isEmpty()){
+                        if(((int)stack.peek() == 1 && !tv.getText().toString().endsWith("-")) || tv.getText().toString().endsWith(" ) ")){
+                            tv.append(" x ln( ");
+                            stack.push(7);
+                        }
+                        else{
+                            tv.append("ln( ");
+                            stack.push(4);
+                        }
+                    }
+                    break;
+                case R.id.buttonlp:
+                    if(tv.getText().toString().endsWith(" . ")) {
+                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - ((int)stack.pop())));
+                    }
+                    if(!tv.getText().toString().isEmpty()){
+                        if(((int)stack.peek() == 1 && !tv.getText().toString().endsWith("-")) || tv.getText().toString().endsWith(" ) ")){
+                            tv.append(" x ( ");
+                            stack.push(5);
+                        }
+                        else{
+                            tv.append("( ");
+                            stack.push(2);
+                        }
+                    }
+                    break;
+                case R.id.buttonrp:
+                    if(tv.getText().toString().endsWith(" . ")) {
+                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - ((int)stack.pop())));
+                    }
+                    if(!tv.getText().toString().isEmpty()){
+                        if(((int)stack.peek() == 1 && !tv.getText().toString().endsWith("-")) || tv.getText().toString().endsWith(" ) ") || !tv.getText().toString().endsWith(" / ")|| !tv.getText().toString().endsWith(" + ")|| !tv.getText().toString().endsWith(" - ")|| !tv.getText().toString().endsWith(" x ")){
+                            tv.append(" ) ");
+                            stack.push(3);
+                        }
+                    }
+                    break;
+                case R.id.buttonsin:
+                    if(tv.getText().toString().endsWith(" . ")) {
+                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - ((int)stack.pop())));
+                    }
+                    if(!tv.getText().toString().isEmpty()){
+                        if(((int)stack.peek() == 1 && !tv.getText().toString().endsWith("-")) || tv.getText().toString().endsWith(" ) ")){
+                            tv.append(" x sin( ");
+                            stack.push(8);
+                        }
+                        else{
+                            tv.append("sin( ");
+                            stack.push(5);
+                        }
+                    }
+                    break;
+                case R.id.buttonarcsin:
+                    if(tv.getText().toString().endsWith(" . ")) {
+                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - ((int)stack.pop())));
+                    }
+                    if(!tv.getText().toString().isEmpty()){
+                        if(((int)stack.peek() == 1 && !tv.getText().toString().endsWith("-")) || tv.getText().toString().endsWith(" ) ")){
+                            tv.append(" x Arcsin( ");
+                            stack.push(11);
+                        }
+                        else{
+                            tv.append("Arcsin( ");
+                            stack.push(8);
+                        }
+                    }
+                    break;
+                case R.id.buttoncos:
+                    if(tv.getText().toString().endsWith(" . ")) {
+                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - ((int)stack.pop())));
+                    }
+                    if(!tv.getText().toString().isEmpty()){
+                        if(((int)stack.peek() == 1 && !tv.getText().toString().endsWith("-")) || tv.getText().toString().endsWith(" ) ")){
+                            tv.append(" x cos( ");
+                            stack.push(8);
+                        }
+                        else{
+                            tv.append("cos( ");
+                            stack.push(5);
+                        }
+                    }
+                    break;
+                case R.id.buttonarccos:
+                    if(tv.getText().toString().endsWith(" . ")) {
+                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - ((int)stack.pop())));
+                    }
+                    if(!tv.getText().toString().isEmpty()){
+                        if(((int)stack.peek() == 1 && !tv.getText().toString().endsWith("-")) || tv.getText().toString().endsWith(" ) ")){
+                            tv.append(" x Arccos( ");
+                            stack.push(11);
+                        }
+                        else{
+                            tv.append("Arccos( ");
+                            stack.push(8);
+                        }
+                    }
+                    break;
+                case R.id.buttontan:
+                    if(tv.getText().toString().endsWith(" . ")) {
+                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - ((int)stack.pop())));
+                    }
+                    if(!tv.getText().toString().isEmpty()){
+                        if(((int)stack.peek() == 1 && !tv.getText().toString().endsWith("-")) || tv.getText().toString().endsWith(" ) ")){
+                            tv.append(" x tan( ");
+                            stack.push(8);
+                        }
+                        else{
+                            tv.append("tan( ");
+                            stack.push(5);
+                        }
+                    }
+                    break;
+                case R.id.buttonarctan:
+                    if(tv.getText().toString().endsWith(" . ")) {
+                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - ((int)stack.pop())));
+                    }
+                    if(!tv.getText().toString().isEmpty()){
+                        if(((int)stack.peek() == 1 && !tv.getText().toString().endsWith("-")) || tv.getText().toString().endsWith(" ) ")){
+                            tv.append(" x Arctan( ");
+                            stack.push(11);
+                        }
+                        else{
+                            tv.append("Arctan( ");
+                            stack.push(8);
+                        }
+                    }
+                    break;
+                case R.id.buttonsquareroot:
+                    if(tv.getText().toString().endsWith(" . ")) {
+                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - ((int)stack.pop())));
+                    }
+                    if(!tv.getText().toString().isEmpty()){
+                        if(((int)stack.peek() == 1 && !tv.getText().toString().endsWith("-")) || tv.getText().toString().endsWith(" ) ")){
+                            tv.append(" x √( ");
+                            stack.push(6);
+                        }
+                        else{
+                            tv.append("√( ");
+                            stack.push(3);
+                        }
+                    }
+                    break;
+                case R.id.buttonexponent:
+                    if(tv.getText().toString().endsWith(" . ")) {
+                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - ((int)stack.pop())));
+                    }
+                    if(!tv.getText().toString().isEmpty()){
+                        if(((int)stack.peek() == 1 && !tv.getText().toString().endsWith("-")) || tv.getText().toString().endsWith(" ) ")){
+                            tv.append("^( ");
+                            stack.push(3);
+                        }
+                    }
+                    break;
+                case R.id.buttoneexp:
+                    if(tv.getText().toString().endsWith(" . ")) {
+                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - ((int)stack.pop())));
+                    }
+                    if(!tv.getText().toString().isEmpty()){
+                        if(((int)stack.peek() == 1 && !tv.getText().toString().endsWith("-")) || tv.getText().toString().endsWith(" ) ")){
+                            tv.append(" x exp( ");
+                            stack.push(8);
+                        }
+                        else{
+                            tv.append("exp( ");
+                            stack.push(5);
+                        }
                     }
                     break;
                 default:

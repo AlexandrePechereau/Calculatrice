@@ -51,9 +51,9 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="%"
+                android:text="+/-"
                 style="?android:attr/borderlessButtonStyle"
-                android:id="@+id/buttonpercent"
+                android:id="@+id/buttonplusorminus"
                 tools:ignore="HardcodedText" />
 
             <Button
@@ -205,7 +205,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="0"
-                android:onClick="onClick"
                 style="?android:attr/borderlessButtonStyle"
                 android:id="@+id/button0"
                 tools:ignore="HardcodedText" />
@@ -222,7 +221,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="more"
-                android:onClick="onClick"
                 style="?android:attr/borderlessButtonStyle"
                 android:id="@+id/buttonmore"
                 tools:ignore="HardcodedText" />
@@ -268,6 +266,7 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:id="@+id/buttonln"
                 tools:ignore="HardcodedText" />
+
         </LinearLayout>
 
         <LinearLayout android:id="@+id/line7"
@@ -306,10 +305,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textAllCaps="false"
-                android:text="Dec"
+                android:text="Arcsin"
                 style="?android:attr/borderlessButtonStyle"
-                android:id="@+id/buttondec"
+                android:id="@+id/buttonarcsin"
                 tools:ignore="HardcodedText" />
+
         </LinearLayout>
 
         <LinearLayout android:id="@+id/line8"
@@ -324,7 +324,7 @@
                 android:layout_height="match_parent"
                 android:text="√"
                 style="?android:attr/borderlessButtonStyle"
-                android:id="@+id/buttonrootsquare"
+                android:id="@+id/buttonsquareroot"
                 tools:ignore="HardcodedText" />
 
             <Button
@@ -333,7 +333,7 @@
                 android:textAllCaps="false"
                 android:text="x^n"
                 style="?android:attr/borderlessButtonStyle"
-                android:id="@+id/buttonexposant"
+                android:id="@+id/buttonexponent"
                 tools:ignore="HardcodedText" />
 
             <Button
@@ -349,10 +349,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textAllCaps="false"
-                android:text="Hex"
+                android:text="Arccos"
                 style="?android:attr/borderlessButtonStyle"
-                android:id="@+id/buttonhex"
+                android:id="@+id/buttonarccos"
                 tools:ignore="HardcodedText" />
+
         </LinearLayout>
 
         <LinearLayout android:id="@+id/line9"
@@ -366,9 +367,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textAllCaps="false"
-                android:text="x10^n"
+                android:text="%"
                 style="?android:attr/borderlessButtonStyle"
-                android:id="@+id/buttonmul10exposant"
+                android:id="@+id/buttonpercent"
                 tools:ignore="HardcodedText" />
 
             <Button
@@ -393,10 +394,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textAllCaps="false"
-                android:text="Bin"
+                android:text="Arctan"
                 style="?android:attr/borderlessButtonStyle"
-                android:id="@+id/buttonbin"
+                android:id="@+id/buttonarctan"
                 tools:ignore="HardcodedText" />
+
         </LinearLayout>
 
         <LinearLayout android:id="@+id/line10"
@@ -410,37 +412,38 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textAllCaps="false"
-                android:text="sin-1"
+                android:text="Dec"
                 style="?android:attr/borderlessButtonStyle"
-                android:id="@+id/buttonsinminus1"
+                android:id="@+id/buttondec"
                 tools:ignore="HardcodedText" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textAllCaps="false"
-                android:text="cos-1"
+                android:text="Bin"
                 style="?android:attr/borderlessButtonStyle"
-                android:id="@+id/buttoncosminus1"
+                android:id="@+id/buttonbin"
                 tools:ignore="HardcodedText" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textAllCaps="false"
-                android:text="tan-1"
+                android:text="Hex"
                 style="?android:attr/borderlessButtonStyle"
-                android:id="@+id/buttontanminus1"
+                android:id="@+id/buttonhex"
                 tools:ignore="HardcodedText" />
+
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="more"
-                android:onClick="onClick"
                 style="?android:attr/borderlessButtonStyle"
                 android:id="@+id/buttonmore2"
                 tools:ignore="HardcodedText" />
+
         </LinearLayout>
 
     </LinearLayout>
