@@ -26,8 +26,9 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout ll10;
 
     private TextView tv;
-    private Stack stack;
+    private Stack<Integer> stack;
     private boolean dot;
+    private int parentheses;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +36,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         tv = (TextView) findViewById(R.id.textView);
-        stack = new Stack(); //enable the clear feature to remove exactly the right number of character(s)
+        stack = new Stack<>(); //enable the clear feature to remove exactly the right number of character(s)
         dot = false;
+        parentheses = 0;
 
         mainll = (LinearLayout) findViewById(R.id.mainLayoutContainer);
         ll1 = (LinearLayout) findViewById(R.id.line1);
@@ -137,8 +139,8 @@ public class MainActivity extends AppCompatActivity {
         Button buttondec = (Button) findViewById(R.id.buttondec);
         buttondec.setOnClickListener(myButtonListener);
 
-        Button buttonsquareroot = (Button) findViewById(R.id.buttonsquareroot);
-        buttonsquareroot.setOnClickListener(myButtonListener);
+        Button buttonexponent = (Button) findViewById(R.id.buttonexponent);
+        buttonexponent.setOnClickListener(myButtonListener);
 
         Button buttonexposant = (Button) findViewById(R.id.buttonsquareroot);
         buttonexposant.setOnClickListener(myButtonListener);
@@ -237,31 +239,31 @@ public class MainActivity extends AppCompatActivity {
                     stack.empty();
                     break;
                 case R.id.buttonC:
-                    if(!tv.getText().toString().isEmpty()) tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - ((int)stack.pop())));
+                    if(!tv.getText().toString().isEmpty()) tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
                     break;
                 case R.id.buttonC2:
-                    if(!tv.getText().toString().isEmpty()) tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - ((int)stack.pop())));
+                    if(!tv.getText().toString().isEmpty()) tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
                     break;
                 case R.id.buttondot:
-                    if((int)stack.peek()<3 && dot == false){ //prevent double dot in a number
+                    if(stack.peek() == 1 && !dot){ //prevent double dot in a number
                         tv.append(" . ");
                         dot = true;
                         stack.push(3);
                     }
                     break;
                 case R.id.buttonplusorminus:
-                    if(tv.getText().toString().isEmpty() ||((int)stack.peek() > 1)){
+                    if(tv.getText().toString().isEmpty() ||(stack.peek() > 1)){
                         tv.append("-");
                         stack.push(1);
                     }
                     break;
                 case R.id.buttondivision:
                     dot = false;
-                    if(tv.getText().toString().endsWith(" . ")) {
-                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - ((int)stack.pop())));
+                    if(tv.getText().toString().endsWith(" . ") || tv.getText().toString().endsWith(" / ") || tv.getText().toString().endsWith(" - ") || tv.getText().toString().endsWith(" x ") || tv.getText().toString().endsWith(" + ")) {
+                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
                     }
                     if(!tv.getText().toString().isEmpty()){
-                        if((int)stack.peek() < 2 && !tv.getText().toString().endsWith("-")){
+                        if(stack.peek() < 2 && !tv.getText().toString().endsWith("-")){
                             tv.append(" / ");
                             stack.push(3);
                         }
@@ -269,11 +271,11 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.buttonmul:
                     dot = false;
-                    if(tv.getText().toString().endsWith(" . ")) {
-                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - ((int)stack.pop())));
+                    if(tv.getText().toString().endsWith(" . ") || tv.getText().toString().endsWith(" / ") || tv.getText().toString().endsWith(" - ") || tv.getText().toString().endsWith(" x ") || tv.getText().toString().endsWith(" + ")) {
+                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
                     }
                     if(!tv.getText().toString().isEmpty()){
-                        if((int)stack.peek() < 2 && !tv.getText().toString().endsWith("-")){
+                        if(stack.peek() < 2 && !tv.getText().toString().endsWith("-")){
                             tv.append(" x ");
                             stack.push(3);
                         }
@@ -281,11 +283,11 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.buttonminus:
                     dot = false;
-                    if(tv.getText().toString().endsWith(" . ")) {
-                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - ((int)stack.pop())));
+                    if(tv.getText().toString().endsWith(" . ") || tv.getText().toString().endsWith(" / ") || tv.getText().toString().endsWith(" - ") || tv.getText().toString().endsWith(" x ") || tv.getText().toString().endsWith(" + ")) {
+                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
                     }
                     if(!tv.getText().toString().isEmpty()){
-                        if((int)stack.peek() < 2 && !tv.getText().toString().endsWith("-")){
+                        if(stack.peek() < 2 && !tv.getText().toString().endsWith("-")){
                             tv.append(" - ");
                             stack.push(3);
                         }
@@ -293,22 +295,24 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.buttonplus:
                     dot = false;
-                    if(tv.getText().toString().endsWith(" . ")) {
-                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - ((int)stack.pop())));
+                    if(tv.getText().toString().endsWith(" . ") || tv.getText().toString().endsWith(" / ") || tv.getText().toString().endsWith(" - ") || tv.getText().toString().endsWith(" x ") || tv.getText().toString().endsWith(" + ")) {
+                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
                     }
                     if(!tv.getText().toString().isEmpty()){
-                        if((int)stack.peek() < 2 && !tv.getText().toString().endsWith("-")){
+                        if(stack.peek() < 2 && !tv.getText().toString().endsWith("-")){
                             tv.append(" + ");
                             stack.push(3);
                         }
                     }
                     break;
                 case R.id.buttonlog:
+                    dot = false;
+                    parentheses++;
                     if(tv.getText().toString().endsWith(" . ")) {
-                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - ((int)stack.pop())));
+                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
                     }
                     if(!tv.getText().toString().isEmpty()){
-                        if(((int)stack.peek() == 1 && !tv.getText().toString().endsWith("-")) || tv.getText().toString().endsWith(" ) ")){
+                        if((stack.peek() == 1 && !tv.getText().toString().endsWith("-")) || tv.getText().toString().endsWith(" ) ")){
                             tv.append(" x log( ");
                             stack.push(8);
                         }
@@ -317,13 +321,19 @@ public class MainActivity extends AppCompatActivity {
                             stack.push(5);
                         }
                     }
+                    else{
+                        tv.append("log( ");
+                        stack.push(5);
+                    }
                     break;
                 case R.id.buttonln:
+                    dot = false;
+                    parentheses++;
                     if(tv.getText().toString().endsWith(" . ")) {
-                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - ((int)stack.pop())));
+                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
                     }
                     if(!tv.getText().toString().isEmpty()){
-                        if(((int)stack.peek() == 1 && !tv.getText().toString().endsWith("-")) || tv.getText().toString().endsWith(" ) ")){
+                        if((stack.peek() == 1 && !tv.getText().toString().endsWith("-")) || tv.getText().toString().endsWith(" ) ")){
                             tv.append(" x ln( ");
                             stack.push(7);
                         }
@@ -332,13 +342,19 @@ public class MainActivity extends AppCompatActivity {
                             stack.push(4);
                         }
                     }
+                    else{
+                        tv.append("ln( ");
+                        stack.push(4);
+                    }
                     break;
                 case R.id.buttonlp:
+                    dot = false;
+                    parentheses++;
                     if(tv.getText().toString().endsWith(" . ")) {
-                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - ((int)stack.pop())));
+                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
                     }
                     if(!tv.getText().toString().isEmpty()){
-                        if(((int)stack.peek() == 1 && !tv.getText().toString().endsWith("-")) || tv.getText().toString().endsWith(" ) ")){
+                        if((stack.peek() == 1 && !tv.getText().toString().endsWith("-")) || tv.getText().toString().endsWith(" ) ")){
                             tv.append(" x ( ");
                             stack.push(5);
                         }
@@ -347,24 +363,36 @@ public class MainActivity extends AppCompatActivity {
                             stack.push(2);
                         }
                     }
+                    else{
+                        tv.append("( ");
+                        stack.push(2);
+                    }
                     break;
                 case R.id.buttonrp:
-                    if(tv.getText().toString().endsWith(" . ")) {
-                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - ((int)stack.pop())));
-                    }
-                    if(!tv.getText().toString().isEmpty()){
-                        if(((int)stack.peek() == 1 && !tv.getText().toString().endsWith("-")) || tv.getText().toString().endsWith(" ) ") || !tv.getText().toString().endsWith(" / ")|| !tv.getText().toString().endsWith(" + ")|| !tv.getText().toString().endsWith(" - ")|| !tv.getText().toString().endsWith(" x ")){
-                            tv.append(" ) ");
-                            stack.push(3);
+                    System.out.println(parentheses);
+                    if(parentheses > 0) {
+
+                        if (tv.getText().toString().endsWith(" . ")) {
+                            tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
+                        }
+                        if (!tv.getText().toString().isEmpty()) {
+                            if ((stack.peek() == 1 && !tv.getText().toString().endsWith("-")) || tv.getText().toString().endsWith(" ) ")) {
+
+                                parentheses--;
+                                tv.append(" ) ");
+                                stack.push(3);
+                            }
                         }
                     }
                     break;
                 case R.id.buttonsin:
+                    dot = false;
+                    parentheses++;
                     if(tv.getText().toString().endsWith(" . ")) {
-                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - ((int)stack.pop())));
+                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
                     }
                     if(!tv.getText().toString().isEmpty()){
-                        if(((int)stack.peek() == 1 && !tv.getText().toString().endsWith("-")) || tv.getText().toString().endsWith(" ) ")){
+                        if((stack.peek() == 1 && !tv.getText().toString().endsWith("-")) || tv.getText().toString().endsWith(" ) ")){
                             tv.append(" x sin( ");
                             stack.push(8);
                         }
@@ -373,13 +401,19 @@ public class MainActivity extends AppCompatActivity {
                             stack.push(5);
                         }
                     }
+                    else{
+                        tv.append("sin( ");
+                        stack.push(5);
+                    }
                     break;
                 case R.id.buttonarcsin:
+                    dot = false;
+                    parentheses++;
                     if(tv.getText().toString().endsWith(" . ")) {
-                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - ((int)stack.pop())));
+                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
                     }
                     if(!tv.getText().toString().isEmpty()){
-                        if(((int)stack.peek() == 1 && !tv.getText().toString().endsWith("-")) || tv.getText().toString().endsWith(" ) ")){
+                        if((stack.peek() == 1 && !tv.getText().toString().endsWith("-")) || tv.getText().toString().endsWith(" ) ")){
                             tv.append(" x Arcsin( ");
                             stack.push(11);
                         }
@@ -388,13 +422,19 @@ public class MainActivity extends AppCompatActivity {
                             stack.push(8);
                         }
                     }
+                    else{
+                        tv.append("Arcsin( ");
+                        stack.push(8);
+                    }
                     break;
                 case R.id.buttoncos:
+                    dot = false;
+                    parentheses++;
                     if(tv.getText().toString().endsWith(" . ")) {
-                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - ((int)stack.pop())));
+                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
                     }
                     if(!tv.getText().toString().isEmpty()){
-                        if(((int)stack.peek() == 1 && !tv.getText().toString().endsWith("-")) || tv.getText().toString().endsWith(" ) ")){
+                        if((stack.peek() == 1 && !tv.getText().toString().endsWith("-")) || tv.getText().toString().endsWith(" ) ")){
                             tv.append(" x cos( ");
                             stack.push(8);
                         }
@@ -403,13 +443,19 @@ public class MainActivity extends AppCompatActivity {
                             stack.push(5);
                         }
                     }
+                    else{
+                        tv.append("cos( ");
+                        stack.push(5);
+                    }
                     break;
                 case R.id.buttonarccos:
+                    dot = false;
+                    parentheses++;
                     if(tv.getText().toString().endsWith(" . ")) {
-                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - ((int)stack.pop())));
+                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
                     }
                     if(!tv.getText().toString().isEmpty()){
-                        if(((int)stack.peek() == 1 && !tv.getText().toString().endsWith("-")) || tv.getText().toString().endsWith(" ) ")){
+                        if((stack.peek() == 1 && !tv.getText().toString().endsWith("-")) || tv.getText().toString().endsWith(" ) ")){
                             tv.append(" x Arccos( ");
                             stack.push(11);
                         }
@@ -418,13 +464,19 @@ public class MainActivity extends AppCompatActivity {
                             stack.push(8);
                         }
                     }
+                    else{
+                        tv.append("Arccos( ");
+                        stack.push(8);
+                    }
                     break;
                 case R.id.buttontan:
+                    dot = false;
+                    parentheses++;
                     if(tv.getText().toString().endsWith(" . ")) {
-                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - ((int)stack.pop())));
+                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
                     }
                     if(!tv.getText().toString().isEmpty()){
-                        if(((int)stack.peek() == 1 && !tv.getText().toString().endsWith("-")) || tv.getText().toString().endsWith(" ) ")){
+                        if((stack.peek() == 1 && !tv.getText().toString().endsWith("-")) || tv.getText().toString().endsWith(" ) ")){
                             tv.append(" x tan( ");
                             stack.push(8);
                         }
@@ -433,13 +485,19 @@ public class MainActivity extends AppCompatActivity {
                             stack.push(5);
                         }
                     }
+                    else{
+                        tv.append("tan( ");
+                        stack.push(5);
+                    }
                     break;
                 case R.id.buttonarctan:
+                    dot = false;
+                    parentheses++;
                     if(tv.getText().toString().endsWith(" . ")) {
-                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - ((int)stack.pop())));
+                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
                     }
                     if(!tv.getText().toString().isEmpty()){
-                        if(((int)stack.peek() == 1 && !tv.getText().toString().endsWith("-")) || tv.getText().toString().endsWith(" ) ")){
+                        if((stack.peek() == 1 && !tv.getText().toString().endsWith("-")) || tv.getText().toString().endsWith(" ) ")){
                             tv.append(" x Arctan( ");
                             stack.push(11);
                         }
@@ -448,13 +506,19 @@ public class MainActivity extends AppCompatActivity {
                             stack.push(8);
                         }
                     }
+                    else{
+                        tv.append("Arctan( ");
+                        stack.push(8);
+                    }
                     break;
                 case R.id.buttonsquareroot:
+                    dot = false;
+                    parentheses++;
                     if(tv.getText().toString().endsWith(" . ")) {
-                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - ((int)stack.pop())));
+                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
                     }
                     if(!tv.getText().toString().isEmpty()){
-                        if(((int)stack.peek() == 1 && !tv.getText().toString().endsWith("-")) || tv.getText().toString().endsWith(" ) ")){
+                        if((stack.peek() == 1 && !tv.getText().toString().endsWith("-")) || tv.getText().toString().endsWith(" ) ")){
                             tv.append(" x √( ");
                             stack.push(6);
                         }
@@ -463,24 +527,32 @@ public class MainActivity extends AppCompatActivity {
                             stack.push(3);
                         }
                     }
+                    else{
+                        tv.append("√( ");
+                        stack.push(3);
+                    }
                     break;
                 case R.id.buttonexponent:
+                    dot = false;
+                    parentheses++;
                     if(tv.getText().toString().endsWith(" . ")) {
-                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - ((int)stack.pop())));
+                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
                     }
                     if(!tv.getText().toString().isEmpty()){
-                        if(((int)stack.peek() == 1 && !tv.getText().toString().endsWith("-")) || tv.getText().toString().endsWith(" ) ")){
+                        if((stack.peek() == 1 && !tv.getText().toString().endsWith("-")) || tv.getText().toString().endsWith(" ) ")){
                             tv.append("^( ");
                             stack.push(3);
                         }
                     }
                     break;
                 case R.id.buttoneexp:
+                    dot = false;
+                    parentheses++;
                     if(tv.getText().toString().endsWith(" . ")) {
-                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - ((int)stack.pop())));
+                        tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
                     }
                     if(!tv.getText().toString().isEmpty()){
-                        if(((int)stack.peek() == 1 && !tv.getText().toString().endsWith("-")) || tv.getText().toString().endsWith(" ) ")){
+                        if((stack.peek() == 1 && !tv.getText().toString().endsWith("-")) || tv.getText().toString().endsWith(" ) ")){
                             tv.append(" x exp( ");
                             stack.push(8);
                         }
@@ -489,10 +561,21 @@ public class MainActivity extends AppCompatActivity {
                             stack.push(5);
                         }
                     }
+                    else{
+                        tv.append("exp( ");
+                        stack.push(5);
+                    }
+                    break;
+                case R.id.buttonequal:
+                    if(parentheses>0){
+                        System.out.println("Not enough right parentheses");
+                    }
                     break;
                 default:
                     break;
             }
+
+
         }
     };
     private void repopulateLayout(int mode){
