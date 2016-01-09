@@ -9,6 +9,10 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.mycompany.calculatrice.ShuntingYardAlgorithm.interpreter.ReversePolishNotationEvaluator;
+import com.mycompany.calculatrice.ShuntingYardAlgorithm.parser.ShuntingJardAlgorithm;
+
+import java.util.NoSuchElementException;
 import java.util.Stack;
 
 public class MainActivity extends AppCompatActivity {
@@ -231,18 +235,21 @@ public class MainActivity extends AppCompatActivity {
                     stack.push(1);
                     break;
                 case R.id.buttonAC:
-                    tv.setText("");
-                    stack.empty();
-                    break;
                 case R.id.buttonAC2:
                     tv.setText("");
                     stack.empty();
+                    parentheses = 0;
                     break;
                 case R.id.buttonC:
-                    if(!tv.getText().toString().isEmpty()) tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
-                    break;
                 case R.id.buttonC2:
-                    if(!tv.getText().toString().isEmpty()) tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
+                    if(!tv.getText().toString().isEmpty()) {
+                        String str = tv.getText().toString();
+                        String substr = str.subSequence(str.length() - stack.peek(), str.length()).toString();
+                        if (substr.contains(")")) parentheses++;
+                        if (substr.contains("(")) parentheses--;
+                        if (!tv.getText().toString().isEmpty())
+                            tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
+                    }
                     break;
                 case R.id.buttondot:
                     if(stack.peek() == 1 && !dot){ //prevent double dot in a number
@@ -263,10 +270,17 @@ public class MainActivity extends AppCompatActivity {
                         tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
                     }
                     if(!tv.getText().toString().isEmpty()){
-                        if(stack.peek() < 2 && !tv.getText().toString().endsWith("-")){
-                            tv.append(" / ");
-                            stack.push(3);
+                        if(!tv.getText().toString().endsWith(" ) ")) {
+                            if (stack.peek() < 2 && !tv.getText().toString().endsWith("-")) {
+                                tv.append(" / ");
+                                stack.push(3);
+                            }
                         }
+                        else{
+                            tv.append("/ ");
+                            stack.push(2);
+                        }
+
                     }
                     break;
                 case R.id.buttonmul:
@@ -275,9 +289,15 @@ public class MainActivity extends AppCompatActivity {
                         tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
                     }
                     if(!tv.getText().toString().isEmpty()){
-                        if(stack.peek() < 2 && !tv.getText().toString().endsWith("-")){
-                            tv.append(" x ");
-                            stack.push(3);
+                        if(!tv.getText().toString().endsWith(" ) ")) {
+                            if (stack.peek() < 2 && !tv.getText().toString().endsWith("-")) {
+                                tv.append(" x ");
+                                stack.push(3);
+                            }
+                        }
+                        else{
+                            tv.append("x ");
+                            stack.push(2);
                         }
                     }
                     break;
@@ -287,9 +307,15 @@ public class MainActivity extends AppCompatActivity {
                         tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
                     }
                     if(!tv.getText().toString().isEmpty()){
-                        if(stack.peek() < 2 && !tv.getText().toString().endsWith("-")){
-                            tv.append(" - ");
-                            stack.push(3);
+                        if(!tv.getText().toString().endsWith(" ) ")) {
+                            if (stack.peek() < 2 && !tv.getText().toString().endsWith("-")) {
+                                tv.append(" - ");
+                                stack.push(3);
+                            }
+                        }
+                        else{
+                            tv.append("- ");
+                            stack.push(2);
                         }
                     }
                     break;
@@ -299,9 +325,15 @@ public class MainActivity extends AppCompatActivity {
                         tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
                     }
                     if(!tv.getText().toString().isEmpty()){
-                        if(stack.peek() < 2 && !tv.getText().toString().endsWith("-")){
-                            tv.append(" + ");
-                            stack.push(3);
+                        if(!tv.getText().toString().endsWith(" ) ")) {
+                            if (stack.peek() < 2 && !tv.getText().toString().endsWith("-")) {
+                                tv.append(" + ");
+                                stack.push(3);
+                            }
+                        }
+                        else{
+                            tv.append("+ ");
+                            stack.push(2);
                         }
                     }
                     break;
@@ -369,7 +401,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                     break;
                 case R.id.buttonrp:
-                    System.out.println(parentheses);
                     if(parentheses > 0) {
 
                         if (tv.getText().toString().endsWith(" . ")) {
@@ -569,6 +600,42 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.buttonequal:
                     if(parentheses>0){
                         System.out.println("Not enough right parentheses");
+                    }
+                    else {
+                        String formula = tv.getText().toString();
+                        formula = formula.replace("√(", "sqrt (");
+                        formula = formula.replace("-sqrt", "- sqrt");
+                        formula = formula.replace("exp(", "exp (");
+                        formula = formula.replace("-exp", "- exp");
+                        formula = formula.replace("sin(", "sin (");
+                        formula = formula.replace("-sin", "- sin");
+                        formula = formula.replace("cos(", "cos (");
+                        formula = formula.replace("-cos", "- cos");
+                        formula = formula.replace("tan(", "tan (");
+                        formula = formula.replace("-tan", "- tan");
+                        formula = formula.replace("Arcsin(", "Arcsin (");
+                        formula = formula.replace("-Arcsin", "- Arcsin");
+                        formula = formula.replace("Arccos(", "Arccos (");
+                        formula = formula.replace("-Arccos", "- Arccos");
+                        formula = formula.replace("Arctan(", "Arctan (");
+                        formula = formula.replace("-Arctan", "- Arctan");
+                        formula = formula.replace("^(", "^ (");
+                        formula = formula.replace("log(", "log (");
+                        formula = formula.replace("-log", "- log");
+                        formula = formula.replace("ln(", "ln (");
+                        formula = formula.replace("-ln", "- ln");
+                        formula = formula.replace("- -","+");
+                        System.out.println(formula);
+                        try {
+                            String result = String.valueOf(new ReversePolishNotationEvaluator(new ShuntingJardAlgorithm(formula).evaluate()).evaluate());
+                            tv.setText("");
+                            tv.append(result);
+                            stack.empty();
+                            stack.push(result.length());
+                            parentheses = 0;
+                        } catch (NoSuchElementException e) {
+                            System.out.println("Syntax error!");
+                        }
                     }
                     break;
                 default:
