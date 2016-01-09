@@ -259,7 +259,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     break;
                 case R.id.buttonplusorminus:
-                    if(tv.getText().toString().isEmpty() ||(stack.peek() > 1)){
+                    if((tv.getText().toString().isEmpty() || (stack.peek() > 1)) && !tv.getText().toString().endsWith(" ) ")){
                         tv.append("-");
                         stack.push(1);
                     }
@@ -631,7 +631,7 @@ public class MainActivity extends AppCompatActivity {
                             tv.setText("");
                             tv.append(result);
                             stack.empty();
-                            stack.push(result.length());
+                            for(int i = 0;i<result.length();i++) stack.push(1);
                             parentheses = 0;
                         } catch (NoSuchElementException e) {
                             System.out.println("Syntax error!");
