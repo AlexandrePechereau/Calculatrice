@@ -122,7 +122,7 @@ public class ShuntingJardAlgorithm {
                 }
                 stack.push(token);
             }
-
+			System.out.println("token = "+token);
             if(token.charAt(0) == '(') {
                 stack.push(token);
             }

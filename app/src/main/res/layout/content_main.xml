@@ -17,16 +17,17 @@
         android:layout_alignParentBottom="true">
 
         <TextView
+            android:lines="10"
             android:background="@color/white"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:paddingBottom="20dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:paddingTop="20dp"
             android:textColor="@color/lightdark"
             android:id="@+id/textView"
-            android:layout_weight="0.50" />
+            android:layout_weight="1" />
 
         <LinearLayout android:id="@+id/line1"
             android:orientation="horizontal"

@@ -30,9 +30,9 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout ll10;
 
     private TextView tv;
-    private Stack<Integer> stack;
-    private boolean dot;
-    private int parentheses;
+    private Stack<Integer> stack; //enable the clear feature to remove exactly the right number of character(s) of the TextView
+    private boolean dot; //help not putting two dots in the same number
+    private int parentheses; // calculate if there is the right amount of left and right parentheses
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         tv = (TextView) findViewById(R.id.textView);
-        stack = new Stack<>(); //enable the clear feature to remove exactly the right number of character(s)
+        stack = new Stack<>();
         dot = false;
         parentheses = 0;
 
@@ -176,12 +176,13 @@ public class MainActivity extends AppCompatActivity {
         Button buttontanminus1 = (Button) findViewById(R.id.buttonarctan);
         buttontanminus1.setOnClickListener(myButtonListener);
 
+        ///// remove the last 5 lines (5 LinearLayouts) of the xml because they should not be visible at the same time ///////
         mainll.removeView(ll6);
         mainll.removeView(ll7);
         mainll.removeView(ll8);
         mainll.removeView(ll9);
         mainll.removeView(ll10);
-
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
     final private View.OnClickListener myButtonListener = new View.OnClickListener() {
@@ -407,11 +408,18 @@ public class MainActivity extends AppCompatActivity {
                             tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
                         }
                         if (!tv.getText().toString().isEmpty()) {
-                            if ((stack.peek() == 1 && !tv.getText().toString().endsWith("-")) || tv.getText().toString().endsWith(" ) ")) {
-
+                            if(tv.getText().toString().endsWith(" ) ")){
                                 parentheses--;
-                                tv.append(" ) ");
-                                stack.push(3);
+                                tv.append(") ");
+                                stack.push(2);
+                            }
+                            else {
+                                if (stack.peek() == 1 && !tv.getText().toString().endsWith("-")) {
+
+                                    parentheses--;
+                                    tv.append(" ) ");
+                                    stack.push(3);
+                                }
                             }
                         }
                     }
@@ -603,6 +611,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                     else {
                         String formula = tv.getText().toString();
+
+                        ////// HELPING THE LEXER //////////
                         formula = formula.replace("√(", "sqrt (");
                         formula = formula.replace("-sqrt", "- sqrt");
                         formula = formula.replace("exp(", "exp (");
@@ -619,16 +629,18 @@ public class MainActivity extends AppCompatActivity {
                         formula = formula.replace("-Arccos", "- Arccos");
                         formula = formula.replace("Arctan(", "Arctan (");
                         formula = formula.replace("-Arctan", "- Arctan");
-                        formula = formula.replace("^(", "^ (");
+                        formula = formula.replace("^(", " ^ (");
                         formula = formula.replace("log(", "log (");
                         formula = formula.replace("-log", "- log");
                         formula = formula.replace("ln(", "ln (");
                         formula = formula.replace("-ln", "- ln");
-                        formula = formula.replace("- -","+");
+                        formula = formula.replace("- -","+"); // helping the calculations
+                        ////////////////////////////////////////
                         System.out.println(formula);
                         try {
                             String result = String.valueOf(new ReversePolishNotationEvaluator(new ShuntingJardAlgorithm(formula).evaluate()).evaluate());
                             tv.setText("");
+                            if(result.endsWith(".0")) result = result.substring(0,result.length()-2); // deleting .0 a the end of the result
                             tv.append(result);
                             stack.empty();
                             for(int i = 0;i<result.length();i++) stack.push(1);
@@ -645,7 +657,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
     };
-    private void repopulateLayout(int mode){
+    private void repopulateLayout(int mode){ // toggle between the two modes
 
         if(mode == 0){
             mainll.removeView(ll6);
@@ -674,7 +686,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -694,5 +706,5 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 }

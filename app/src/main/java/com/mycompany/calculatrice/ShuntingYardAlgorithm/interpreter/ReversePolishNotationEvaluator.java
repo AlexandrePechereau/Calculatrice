@@ -53,7 +53,6 @@ public class ReversePolishNotationEvaluator {
                         System.out.println("minus");
 				    	stack.push("" + (-secondOperand));
 				    }
-
 			    }
                 else if (instruction.equals("sin")) {
 		            firstOperand = cast(stack.pop());
