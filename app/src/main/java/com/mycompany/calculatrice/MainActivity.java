@@ -254,9 +254,9 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.buttondot:
                     if(stack.peek() == 1 && !dot){ //prevent double dot in a number
-                        tv.append(" . ");
+                        tv.append(".");
                         dot = true;
-                        stack.push(3);
+                        stack.push(1);
                     }
                     break;
                 case R.id.buttonplusorminus:
@@ -267,7 +267,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.buttondivision:
                     dot = false;
-                    if(tv.getText().toString().endsWith(" . ") || tv.getText().toString().endsWith(" / ") || tv.getText().toString().endsWith(" - ") || tv.getText().toString().endsWith(" x ") || tv.getText().toString().endsWith(" + ")) {
+                    if(tv.getText().toString().endsWith(".") || tv.getText().toString().endsWith(" / ") || tv.getText().toString().endsWith(" - ") || tv.getText().toString().endsWith(" x ") || tv.getText().toString().endsWith(" + ")) {
                         tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
                     }
                     if(!tv.getText().toString().isEmpty()){
@@ -286,7 +286,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.buttonmul:
                     dot = false;
-                    if(tv.getText().toString().endsWith(" . ") || tv.getText().toString().endsWith(" / ") || tv.getText().toString().endsWith(" - ") || tv.getText().toString().endsWith(" x ") || tv.getText().toString().endsWith(" + ")) {
+                    if(tv.getText().toString().endsWith(".") || tv.getText().toString().endsWith(" / ") || tv.getText().toString().endsWith(" - ") || tv.getText().toString().endsWith(" x ") || tv.getText().toString().endsWith(" + ")) {
                         tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
                     }
                     if(!tv.getText().toString().isEmpty()){
@@ -304,7 +304,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.buttonminus:
                     dot = false;
-                    if(tv.getText().toString().endsWith(" . ") || tv.getText().toString().endsWith(" / ") || tv.getText().toString().endsWith(" - ") || tv.getText().toString().endsWith(" x ") || tv.getText().toString().endsWith(" + ")) {
+                    if(tv.getText().toString().endsWith(".") || tv.getText().toString().endsWith(" / ") || tv.getText().toString().endsWith(" - ") || tv.getText().toString().endsWith(" x ") || tv.getText().toString().endsWith(" + ")) {
                         tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
                     }
                     if(!tv.getText().toString().isEmpty()){
@@ -322,7 +322,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.buttonplus:
                     dot = false;
-                    if(tv.getText().toString().endsWith(" . ") || tv.getText().toString().endsWith(" / ") || tv.getText().toString().endsWith(" - ") || tv.getText().toString().endsWith(" x ") || tv.getText().toString().endsWith(" + ")) {
+                    if(tv.getText().toString().endsWith(".") || tv.getText().toString().endsWith(" / ") || tv.getText().toString().endsWith(" - ") || tv.getText().toString().endsWith(" x ") || tv.getText().toString().endsWith(" + ")) {
                         tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
                     }
                     if(!tv.getText().toString().isEmpty()){
@@ -341,7 +341,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.buttonlog:
                     dot = false;
                     parentheses++;
-                    if(tv.getText().toString().endsWith(" . ")) {
+                    if(tv.getText().toString().endsWith(".")) {
                         tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
                     }
                     if(!tv.getText().toString().isEmpty()){
@@ -362,7 +362,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.buttonln:
                     dot = false;
                     parentheses++;
-                    if(tv.getText().toString().endsWith(" . ")) {
+                    if(tv.getText().toString().endsWith(".")) {
                         tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
                     }
                     if(!tv.getText().toString().isEmpty()){
@@ -383,7 +383,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.buttonlp:
                     dot = false;
                     parentheses++;
-                    if(tv.getText().toString().endsWith(" . ")) {
+                    if(tv.getText().toString().endsWith(".")) {
                         tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
                     }
                     if(!tv.getText().toString().isEmpty()){
@@ -404,7 +404,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.buttonrp:
                     if(parentheses > 0) {
 
-                        if (tv.getText().toString().endsWith(" . ")) {
+                        if (tv.getText().toString().endsWith(".")) {
                             tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
                         }
                         if (!tv.getText().toString().isEmpty()) {
@@ -427,7 +427,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.buttonsin:
                     dot = false;
                     parentheses++;
-                    if(tv.getText().toString().endsWith(" . ")) {
+                    if(tv.getText().toString().endsWith(".")) {
                         tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
                     }
                     if(!tv.getText().toString().isEmpty()){
@@ -448,7 +448,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.buttonarcsin:
                     dot = false;
                     parentheses++;
-                    if(tv.getText().toString().endsWith(" . ")) {
+                    if(tv.getText().toString().endsWith(".")) {
                         tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
                     }
                     if(!tv.getText().toString().isEmpty()){
@@ -469,7 +469,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.buttoncos:
                     dot = false;
                     parentheses++;
-                    if(tv.getText().toString().endsWith(" . ")) {
+                    if(tv.getText().toString().endsWith(".")) {
                         tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
                     }
                     if(!tv.getText().toString().isEmpty()){
@@ -490,7 +490,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.buttonarccos:
                     dot = false;
                     parentheses++;
-                    if(tv.getText().toString().endsWith(" . ")) {
+                    if(tv.getText().toString().endsWith(".")) {
                         tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
                     }
                     if(!tv.getText().toString().isEmpty()){
@@ -511,7 +511,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.buttontan:
                     dot = false;
                     parentheses++;
-                    if(tv.getText().toString().endsWith(" . ")) {
+                    if(tv.getText().toString().endsWith(".")) {
                         tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
                     }
                     if(!tv.getText().toString().isEmpty()){
@@ -532,7 +532,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.buttonarctan:
                     dot = false;
                     parentheses++;
-                    if(tv.getText().toString().endsWith(" . ")) {
+                    if(tv.getText().toString().endsWith(".")) {
                         tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
                     }
                     if(!tv.getText().toString().isEmpty()){
@@ -553,7 +553,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.buttonsquareroot:
                     dot = false;
                     parentheses++;
-                    if(tv.getText().toString().endsWith(" . ")) {
+                    if(tv.getText().toString().endsWith(".")) {
                         tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
                     }
                     if(!tv.getText().toString().isEmpty()){
@@ -574,7 +574,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.buttonexponent:
                     dot = false;
                     parentheses++;
-                    if(tv.getText().toString().endsWith(" . ")) {
+                    if(tv.getText().toString().endsWith(".")) {
                         tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
                     }
                     if(!tv.getText().toString().isEmpty()){
@@ -587,7 +587,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.buttoneexp:
                     dot = false;
                     parentheses++;
-                    if(tv.getText().toString().endsWith(" . ")) {
+                    if(tv.getText().toString().endsWith(".")) {
                         tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
                     }
                     if(!tv.getText().toString().isEmpty()){
