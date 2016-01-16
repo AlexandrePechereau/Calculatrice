@@ -188,6 +188,11 @@ public class MainActivity extends AppCompatActivity {
     final private View.OnClickListener myButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            if(tv.getText().toString().endsWith("Error")) {
+                tv.setText("");
+                stack.empty();
+                parentheses = 0;
+            }
             switch (v.getId()) {
                 case R.id.buttonmore:
                     repopulateLayout(1);
@@ -196,42 +201,82 @@ public class MainActivity extends AppCompatActivity {
                     repopulateLayout(0);
                     break;
                 case R.id.button0:
+                    if(tv.getText().toString().endsWith(" ) ")) {
+                        stack.push(2);
+                        tv.append("x ");
+                    }
                     tv.append("0");
                     stack.push(1);
                     break;
                 case R.id.button1:
+                    if(tv.getText().toString().endsWith(" ) ")) {
+                        stack.push(2);
+                        tv.append("x ");
+                    }
                     tv.append("1");
                     stack.push(1);
                     break;
                 case R.id.button2:
+                    if(tv.getText().toString().endsWith(" ) ")) {
+                        stack.push(2);
+                        tv.append("x ");
+                    }
                     tv.append("2");
                     stack.push(1);
                     break;
                 case R.id.button3:
+                    if(tv.getText().toString().endsWith(" ) ")) {
+                        stack.push(2);
+                        tv.append("x ");
+                    }
                     tv.append("3");
                     stack.push(1);
                     break;
                 case R.id.button4:
+                    if(tv.getText().toString().endsWith(" ) ")) {
+                        stack.push(2);
+                        tv.append("x ");
+                    }
                     tv.append("4");
                     stack.push(1);
                     break;
                 case R.id.button5:
+                    if(tv.getText().toString().endsWith(" ) ")) {
+                        stack.push(2);
+                        tv.append("x ");
+                    }
                     tv.append("5");
                     stack.push(1);
                     break;
                 case R.id.button6:
+                    if(tv.getText().toString().endsWith(" ) ")) {
+                        stack.push(2);
+                        tv.append("x ");
+                    }
                     tv.append("6");
                     stack.push(1);
                     break;
                 case R.id.button7:
+                    if(tv.getText().toString().endsWith(" ) ")) {
+                        stack.push(2);
+                        tv.append("x ");
+                    }
                     tv.append("7");
                     stack.push(1);
                     break;
                 case R.id.button8:
+                    if(tv.getText().toString().endsWith(" ) ")) {
+                        stack.push(2);
+                        tv.append("x ");
+                    }
                     tv.append("8");
                     stack.push(1);
                     break;
                 case R.id.button9:
+                    if(tv.getText().toString().endsWith(" ) ")) {
+                        stack.push(2);
+                        tv.append("x ");
+                    }
                     tv.append("9");
                     stack.push(1);
                     break;
@@ -550,6 +595,33 @@ public class MainActivity extends AppCompatActivity {
                         stack.push(8);
                     }
                     break;
+                case R.id.buttonpercent:
+                    if(stack.peek() == 1 && !tv.getText().toString().endsWith("-")) {
+                        int nb_char = 0;
+                        boolean b_continue = stack.peek() == 1;
+                        while (b_continue) {
+                            nb_char = nb_char + stack.pop();
+                            b_continue = stack.peek() == 1;
+                        }
+                        if(!stack.empty()) {
+                            String text = tv.getText().toString();
+                            String str_left_part = text.substring(0, text.length() - nb_char);
+                            String str_right_part = text.substring(text.length() - nb_char, text.length());
+                            str_right_part = getPercentage(str_right_part);
+                            for (int i = 0; i < str_right_part.length(); i++) stack.push(1);
+                            tv.setText("");
+                            tv.append(str_left_part);
+                            tv.append(str_right_part);
+                        }
+                        else{
+                            String text = tv.getText().toString();
+                            text = getPercentage(text);
+                            for (int i = 0; i < text.length(); i++) stack.push(1);
+                            tv.setText("");
+                            tv.append(text);
+                        }
+                    }
+                    break;
                 case R.id.buttonsquareroot:
                     dot = false;
                     parentheses++;
@@ -641,9 +713,10 @@ public class MainActivity extends AppCompatActivity {
                             String result = String.valueOf(new ReversePolishNotationEvaluator(new ShuntingJardAlgorithm(formula).evaluate()).evaluate());
                             tv.setText("");
                             if(result.endsWith(".0")) result = result.substring(0,result.length()-2); // deleting .0 a the end of the result
+                            if(result.endsWith("NaN")) result = "Error";
                             tv.append(result);
                             stack.empty();
-                            for(int i = 0;i<result.length();i++) stack.push(1);
+                            if(!result.equals("Error")) for(int i = 0;i<result.length();i++) stack.push(1);
                             parentheses = 0;
                         } catch (NoSuchElementException e) {
                             System.out.println("Syntax error!");
@@ -657,6 +730,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
     };
+
     private void repopulateLayout(int mode){ // toggle between the two modes
 
         if(mode == 0){
@@ -686,25 +760,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    private String getPercentage(String nb){
+        double val = Double.parseDouble(nb);
+        return String.valueOf((val/100));
     }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }*/
 }

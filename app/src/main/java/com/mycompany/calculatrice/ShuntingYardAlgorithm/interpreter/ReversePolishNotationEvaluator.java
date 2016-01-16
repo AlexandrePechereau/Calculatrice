@@ -24,6 +24,7 @@ public class ReversePolishNotationEvaluator {
 	    //System.out.println("IP,\tCode[IP],\tSTACK");
 	    while (instructionPointer < code.length && instructionPointer > -1) {
 		    //System.out.printf("%d,\t%s,\t\t%s\n", instructionPointer, code[instructionPointer], stack);
+			if(stack.peek() == "NaN") return cast("NaN");
             instruction = code[instructionPointer++];
 		    if(Lexer.isNumber(instruction)) {
                 stack.push(instruction);
