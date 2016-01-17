@@ -305,14 +305,52 @@ public class MainActivity extends AppCompatActivity {
                     }
                     break;
                 case R.id.buttonplusorminus:
-                    if((tv.getText().toString().isEmpty() || (stack.peek() > 1)) && !tv.getText().toString().endsWith(" ) ")){
+                    if(((tv.getText().toString().isEmpty() || (stack.peek() > 1)) && !tv.getText().toString().endsWith(" ) ")) || tv.getText().toString().endsWith("E")){
                         tv.append("-");
                         stack.push(1);
+                    }
+                    else{
+                        if(stack.peek() == 1 && !tv.getText().toString().endsWith("-")) {
+                            int nb_char = 0;
+                            boolean b_continue = stack.peek() == 1;
+                            while (b_continue) {
+                                nb_char = nb_char + stack.pop();
+                                if(!stack.isEmpty()) b_continue = stack.peek() == 1;
+                                else break;
+                            }
+                            if(!stack.empty()) {
+                                String text = tv.getText().toString();
+                                String str_left_part = text.substring(0, text.length() - nb_char);
+                                String str_right_part = text.substring(text.length() - nb_char, text.length());
+                                tv.setText("");
+                                tv.append(str_left_part);
+                                if(str_right_part.contains("-")){
+                                    str_right_part = str_right_part.subSequence(1,str_right_part.length()).toString();
+                                }
+                                else{
+                                    str_right_part = "-"+str_right_part;
+                                }
+                                tv.append(str_right_part);
+                                for (int i = 0; i < str_right_part.length(); i++) stack.push(1);
+                            }
+                            else{
+                                String text = tv.getText().toString();
+                                if(text.charAt(0) == '-'){
+                                    text = text.subSequence(1,text.length()).toString();
+                                }
+                                else{
+                                    text = "-"+text;
+                                }
+                                for (int i = 0; i < text.length(); i++) stack.push(1);
+                                tv.setText("");
+                                tv.append(text);
+                            }
+                        }
                     }
                     break;
                 case R.id.buttondivision:
                     dot = false;
-                    if(tv.getText().toString().endsWith(".") || tv.getText().toString().endsWith(" / ") || tv.getText().toString().endsWith(" - ") || tv.getText().toString().endsWith(" x ") || tv.getText().toString().endsWith(" + ")) {
+                    if(tv.getText().toString().endsWith(".") || tv.getText().toString().endsWith(" / ") || tv.getText().toString().endsWith(" - ") || tv.getText().toString().endsWith(" x ") || tv.getText().toString().endsWith(" + ") || tv.getText().toString().endsWith("E")) {
                         tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
                     }
                     if(!tv.getText().toString().isEmpty()){
@@ -331,7 +369,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.buttonmul:
                     dot = false;
-                    if(tv.getText().toString().endsWith(".") || tv.getText().toString().endsWith(" / ") || tv.getText().toString().endsWith(" - ") || tv.getText().toString().endsWith(" x ") || tv.getText().toString().endsWith(" + ")) {
+                    if(tv.getText().toString().endsWith(".") || tv.getText().toString().endsWith(" / ") || tv.getText().toString().endsWith(" - ") || tv.getText().toString().endsWith(" x ") || tv.getText().toString().endsWith(" + ") || tv.getText().toString().endsWith("E")) {
                         tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
                     }
                     if(!tv.getText().toString().isEmpty()){
@@ -349,7 +387,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.buttonminus:
                     dot = false;
-                    if(tv.getText().toString().endsWith(".") || tv.getText().toString().endsWith(" / ") || tv.getText().toString().endsWith(" - ") || tv.getText().toString().endsWith(" x ") || tv.getText().toString().endsWith(" + ")) {
+                    if(tv.getText().toString().endsWith(".") || tv.getText().toString().endsWith(" / ") || tv.getText().toString().endsWith(" - ") || tv.getText().toString().endsWith(" x ") || tv.getText().toString().endsWith(" + ") || tv.getText().toString().endsWith("E")) {
                         tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
                     }
                     if(!tv.getText().toString().isEmpty()){
@@ -367,7 +405,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.buttonplus:
                     dot = false;
-                    if(tv.getText().toString().endsWith(".") || tv.getText().toString().endsWith(" / ") || tv.getText().toString().endsWith(" - ") || tv.getText().toString().endsWith(" x ") || tv.getText().toString().endsWith(" + ")) {
+                    if(tv.getText().toString().endsWith(".") || tv.getText().toString().endsWith(" / ") || tv.getText().toString().endsWith(" - ") || tv.getText().toString().endsWith(" x ") || tv.getText().toString().endsWith(" + ") || tv.getText().toString().endsWith("E")) {
                         tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
                     }
                     if(!tv.getText().toString().isEmpty()){
@@ -428,6 +466,9 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.buttonlp:
                     dot = false;
                     parentheses++;
+                    if(tv.getText().toString().endsWith("E-")){
+
+                    }
                     if(tv.getText().toString().endsWith(".")) {
                         tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
                     }
@@ -601,7 +642,8 @@ public class MainActivity extends AppCompatActivity {
                         boolean b_continue = stack.peek() == 1;
                         while (b_continue) {
                             nb_char = nb_char + stack.pop();
-                            b_continue = stack.peek() == 1;
+                            if(!stack.isEmpty()) b_continue = stack.peek() == 1;
+                            else break;
                         }
                         if(!stack.empty()) {
                             String text = tv.getText().toString();
@@ -678,13 +720,17 @@ public class MainActivity extends AppCompatActivity {
                     }
                     break;
                 case R.id.buttonequal:
-                    if(parentheses>0){
+                    if(tv.getText().toString().endsWith("E")) tv.setText("Error");
+                    else if(tv.getText().toString().endsWith("E-")) tv.setText("Error");
+                    else if(parentheses>0){
                         System.out.println("Not enough right parentheses");
                     }
                     else {
                         String formula = tv.getText().toString();
 
                         ////// HELPING THE LEXER //////////
+                        formula = formula.replace("E( ", " x 10^( ");
+                        formula = formula.replace("E-( ", " x 10^( -");
                         formula = formula.replace("√(", "sqrt (");
                         formula = formula.replace("-sqrt", "- sqrt");
                         formula = formula.replace("exp(", "exp (");
@@ -706,6 +752,7 @@ public class MainActivity extends AppCompatActivity {
                         formula = formula.replace("-log", "- log");
                         formula = formula.replace("ln(", "ln (");
                         formula = formula.replace("-ln", "- ln");
+
                         formula = formula.replace("- -","+"); // helping the calculations
                         ////////////////////////////////////////
                         System.out.println(formula);
