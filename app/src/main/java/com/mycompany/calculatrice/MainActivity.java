@@ -2,6 +2,10 @@ package com.mycompany.calculatrice;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.RelativeSizeSpan;
+import android.text.style.SuperscriptSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,6 +44,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         tv = (TextView) findViewById(R.id.textView);
+        TextView equation = (TextView) findViewById(R.id.textView);
+        SpannableStringBuilder cs = new SpannableStringBuilder("X3 + X2");
+        cs.setSpan(new SuperscriptSpan(), 1, 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        cs.setSpan(new RelativeSizeSpan(0.75f), 1, 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        cs.setSpan(new SuperscriptSpan(), 6, 7, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        cs.setSpan(new RelativeSizeSpan(0.75f), 6, 7, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        equation.setText(cs);
         stack = new Stack<>();
         dot = false;
         parentheses = 0;
@@ -176,6 +187,8 @@ public class MainActivity extends AppCompatActivity {
         Button buttontanminus1 = (Button) findViewById(R.id.buttonarctan);
         buttontanminus1.setOnClickListener(myButtonListener);
 
+
+
         ///// remove the last 5 lines (5 LinearLayouts) of the xml because they should not be visible at the same time ///////
         mainll.removeView(ll6);
         mainll.removeView(ll7);
@@ -283,6 +296,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.buttonAC:
                 case R.id.buttonAC2:
                     tv.setText("");
+                    dot = false;
                     stack.empty();
                     parentheses = 0;
                     break;
