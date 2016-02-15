@@ -1,9 +1,12 @@
 package com.mycompany.calculatrice.ShuntingYardAlgorithm.interpreter;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Stack;
 
+import com.mycompany.calculatrice.BigDecimalMath;
 import com.mycompany.calculatrice.ShuntingYardAlgorithm.lexer.Lexer;
 
 public class ReversePolishNotationEvaluator {
@@ -19,72 +22,73 @@ public class ReversePolishNotationEvaluator {
 	    System.out.println(bytecode);
 	    String code[] = bytecode.split(" ");
         String instruction;
-	    double firstOperand, secondOperand;
+	    //double firstOperand, secondOperand;
+        BigDecimal firstOp, secondOp;
 	    int instructionPointer = 0; //instruction pointer
 	    //System.out.println("IP,\tCode[IP],\tSTACK");
 	    while (instructionPointer < code.length && instructionPointer > -1) {
 		    //System.out.printf("%d,\t%s,\t\t%s\n", instructionPointer, code[instructionPointer], stack);
-			if(stack.peek() == "NaN") return cast("NaN");
+			if(stack.peek() == "NaN") return Double.parseDouble("NaN");
             instruction = code[instructionPointer++];
 		    if(Lexer.isNumber(instruction)) {
                 stack.push(instruction);
             } else {
 			    if (instruction.equals("^")) {
-				    secondOperand = cast(stack.pop());
-				    firstOperand = cast(stack.pop());
-				    stack.push("" + Math.pow(firstOperand, secondOperand));
+                    secondOp = castBigDecimal(stack.pop());
+                    firstOp = castBigDecimal(stack.pop());
+				    stack.push("" + BigDecimalMath.pow(firstOp, secondOp));
 			    } else if (instruction.equals("/")) {
-				    secondOperand = cast(stack.pop());
-				    firstOperand = cast(stack.pop());
-				    stack.push("" + (firstOperand / secondOperand));
+                    secondOp = castBigDecimal(stack.pop());
+                    firstOp = castBigDecimal(stack.pop());
+				    stack.push("" + BigDecimalMath.divideRound(firstOp, secondOp));
 			    } else if (instruction.equals("x")) {
-				    secondOperand = cast(stack.pop());
-				    firstOperand = cast(stack.pop());
-				    stack.push("" + (firstOperand * secondOperand));
+                    secondOp = castBigDecimal(stack.pop());
+                    firstOp = castBigDecimal(stack.pop());
+				    stack.push("" + BigDecimalMath.multiplyRound(firstOp, secondOp));
 			    } else if (instruction.equals("+")) {
-				    secondOperand = cast(stack.pop());
-				    firstOperand = cast(stack.pop());
-				    stack.push("" + (firstOperand + secondOperand));
+                    secondOp = castBigDecimal(stack.pop());
+                    firstOp = castBigDecimal(stack.pop());
+				    stack.push("" + BigDecimalMath.addRound(firstOp, secondOp));
 			    } else if (instruction.equals("-")) {
-				    secondOperand = cast(stack.pop());
+                    secondOp = castBigDecimal(stack.pop());
 				    if(stack.peek() != null && Lexer.isNumber(stack.peek())) { // unary minus
-				    	firstOperand = cast(stack.pop());
-				    	stack.push("" + (firstOperand - secondOperand));
+                        firstOp = castBigDecimal(stack.pop());
+				    	stack.push("" + BigDecimalMath.subtractRound(firstOp, secondOp));
 				    } else {
                         System.out.println("minus");
-				    	stack.push("" + (-secondOperand));
+				    	stack.push("" + BigDecimalMath.multiplyRound(secondOp, (-1)));
 				    }
 			    }
                 else if (instruction.equals("sin")) {
-		            firstOperand = cast(stack.pop());
-		            stack.push("" + Math.sin(firstOperand));
+		            firstOp = castBigDecimal(stack.pop());
+		            stack.push("" + BigDecimalMath.sin(firstOp));
 	            } else if (instruction.equals("cos")) {
-		            firstOperand = cast(stack.pop());
-		            stack.push("" + Math.cos(firstOperand));
+                    firstOp = castBigDecimal(stack.pop());
+		            stack.push("" + BigDecimalMath.cos(firstOp));
 	            } else if (instruction.equals("tan")) {
-					firstOperand = cast(stack.pop());
-					stack.push("" + Math.tan(firstOperand));
+                    firstOp = castBigDecimal(stack.pop());
+					stack.push("" + BigDecimalMath.tan(firstOp));
 				} else if (instruction.equals("Arctan")) {
-		            firstOperand = cast(stack.pop());
-		            stack.push("" + Math.atan(firstOperand));
+                    firstOp = castBigDecimal(stack.pop());
+		            stack.push("" + BigDecimalMath.atan(firstOp));
 	            } else if (instruction.equals("log")) {
-		            firstOperand = cast(stack.pop());
-		            stack.push("" + Math.log(firstOperand));
+                    firstOp = castBigDecimal(stack.pop());
+		            stack.push("" + BigDecimalMath.log(firstOp));
 	            } else if (instruction.equals("exp")) {
-		            firstOperand = cast(stack.pop());
-		            stack.push("" + Math.exp(firstOperand));
+                    firstOp = castBigDecimal(stack.pop());
+		            stack.push("" + BigDecimalMath.exp(firstOp));
 	            } else if(instruction.equals("Arcsin")){
-					firstOperand = cast(stack.pop());
-					stack.push("" + Math.asin(firstOperand));
+                    firstOp = castBigDecimal(stack.pop());
+					stack.push("" + BigDecimalMath.asin(firstOp));
 				} else if (instruction.equals("Arccos")) {
-					firstOperand = cast(stack.pop());
-					stack.push("" + Math.acos(firstOperand));
+                    firstOp = castBigDecimal(stack.pop());
+					stack.push("" + BigDecimalMath.acos(firstOp));
 				} else if (instruction.equals("ln")) {
-					firstOperand = cast(stack.pop());
-					stack.push("" + (-Math.log(1-firstOperand))/firstOperand);
+                    firstOp = castBigDecimal(stack.pop());
+					stack.push("" + BigDecimalMath.divideRound(BigDecimalMath.log(firstOp), BigDecimalMath.log(10,new MathContext(1))));
 				} else if (instruction.equals("sqrt")) {
-					firstOperand = cast(stack.pop());
-					stack.push("" + Math.sqrt(firstOperand));
+                    firstOp = castBigDecimal(stack.pop());
+					stack.push("" + BigDecimalMath.sqrt(firstOp));
 				}
 	            /*else if (instruction.equals("ack")) {
 	            	secondOperand = cast(stack.pop());
@@ -96,25 +100,8 @@ public class ReversePolishNotationEvaluator {
 	            }
             }
         }
-        return cast(stack.pop());
+        return castBigDecimal(stack.pop()).doubleValue();
     }
 
-	private Double cast(String token) {
-		return Double.parseDouble(token);
-	}
-
-	public double ackermann(double m, double n) {
-		if (m < 0 || n < 0) {
-			throw new IllegalArgumentException("Non-negative args only!");
-		}
-
-		if (m == 0) {
-			return n + 1;
-		} else if (n == 0) {
-			return ackermann(m-1, 1); // Corrected!
-		} else {
-			// perforce (m > 0) && (n > 0)
-			return ackermann(m-1, ackermann(m,n-1));
-		}
-	}
+	private BigDecimal castBigDecimal(String token){ return new BigDecimal(token);}
 }

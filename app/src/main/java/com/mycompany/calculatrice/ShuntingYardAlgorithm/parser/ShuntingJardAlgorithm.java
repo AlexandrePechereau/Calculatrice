@@ -1,7 +1,6 @@
 package com.mycompany.calculatrice.ShuntingYardAlgorithm.parser;
 
 import com.mycompany.calculatrice.ShuntingYardAlgorithm.lexer.Lexer;
-import static com.mycompany.calculatrice.ShuntingYardAlgorithm.utils.Util.isNumber;
 
 import java.io.ByteArrayInputStream;
 import java.util.HashMap;

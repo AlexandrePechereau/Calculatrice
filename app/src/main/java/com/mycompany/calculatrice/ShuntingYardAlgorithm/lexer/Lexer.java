@@ -1,7 +1,5 @@
 package com.mycompany.calculatrice.ShuntingYardAlgorithm.lexer;
 
-import com.mycompany.calculatrice.ShuntingYardAlgorithm.utils.DoubleHashMap;
-
 import java.io.*;
 import java.util.Stack;
 
@@ -31,6 +29,11 @@ public class Lexer {
 
         String[] inputsplit = expression.split(" ");
         for(String str : inputsplit){
+            if(getSymbol(str)==CONSTANT){
+                if(!str.contains(".")){
+                    str = str+".0";
+                }
+            }
             input.add(0,str);
         }
     }
@@ -104,71 +107,5 @@ public class Lexer {
         int s;
         while ( (s = l.nextSymbol()) != Lexer.EOF) if(s != EOL) System.out.println(s + " " + l.stringfy());
     }
-	/*public final DoubleHashMap<String, Integer> mnemonics = new DoubleHashMap<String, Integer>() {{
-		put("+", PLUS);
-		put("-", MINUS);
-		put("x", MULTIPLY);
-		put("/", DIVIDE);
-		put("^", POWER);
-		put("(", LEFT);
-		put(")", RIGHT);
-		put(",", COMMA);
-	}};
 
-	public static final String CONST= "[0-9]*\\.?[0-9]*";
-	public static final String FUNC = "[a-zA-z]([a-zA-z]|[0-9])*";
-
-	public Lexer(InputStream in) {
-		Reader r = new BufferedReader(new InputStreamReader(in));
-		input = new StreamTokenizer(r);
-
-		input.resetSyntax();
-		input.eolIsSignificant(true);
-		input.wordChars('a', 'z');
-		input.wordChars('A', 'Z');
-		input.wordChars('0', '9');
-		input.wordChars('.', '.');
-		input.whitespaceChars('\u0000', ' '); //characters from 0 to 32
-		input.whitespaceChars('\n', '\t');
-	}
-
-	public String getString() {
-		return input.sval;
-	}
-
-	public int nextSymbol() {
-		try {
-			switch (input.nextToken()) {
-				case StreamTokenizer.TT_EOL:
-					symbol = EOL; break;
-				case StreamTokenizer.TT_EOF:
-					symbol = EOF; break;
-				case StreamTokenizer.TT_WORD: {
-					if(input.sval.matches(CONST)) symbol = CONSTANT;
-					else if(input.sval.matches(FUNC)) symbol = FUNCTION;
-					else symbol = INVALID;
-					break;
-				}
-				default:
-					symbol = (mnemonics.get(Character.toString((char)input.ttype)) != null) ? mnemonics.get(Character.toString((char)input.ttype)) : NONE; break;
-			}
-		}catch (IOException e) {
-			symbol = EOF;
-		}
-		return symbol;
-	}
-
-	public String stringfy(int token) {
-		switch (token) {
-			case CONSTANT: return getString();
-			case FUNCTION: return getString();
-			default: return mnemonics.getValue(token);
-		}
-	}
-
-	public static void main(String[] args) {
-		Lexer l = new Lexer(new ByteArrayInputStream("sin(cos(sqrt(5)))^5".getBytes()));
-		int s;
-		while ( (s = l.nextSymbol()) != Lexer.EOF) if(s != EOL) System.out.println(s + " " + l.stringfy(s));
-	}*/
 }

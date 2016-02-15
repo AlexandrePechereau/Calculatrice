@@ -44,13 +44,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         tv = (TextView) findViewById(R.id.textView);
-        TextView equation = (TextView) findViewById(R.id.textView);
-        SpannableStringBuilder cs = new SpannableStringBuilder("X3 + X2");
-        cs.setSpan(new SuperscriptSpan(), 1, 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        cs.setSpan(new RelativeSizeSpan(0.75f), 1, 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        cs.setSpan(new SuperscriptSpan(), 6, 7, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        cs.setSpan(new RelativeSizeSpan(0.75f), 6, 7, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        equation.setText(cs);
         stack = new Stack<>();
         dot = false;
         parentheses = 0;
@@ -307,8 +300,8 @@ public class MainActivity extends AppCompatActivity {
                         String substr = str.subSequence(str.length() - stack.peek(), str.length()).toString();
                         if (substr.contains(")")) parentheses++;
                         if (substr.contains("(")) parentheses--;
-                        if (!tv.getText().toString().isEmpty())
-                            tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
+                        if(substr.contains(".")) dot = false;
+                        if (!tv.getText().toString().isEmpty()) tv.setText(tv.getText().toString().subSequence(0, tv.getText().toString().length() - (stack.pop())));
                     }
                     break;
                 case R.id.buttondot:
@@ -338,14 +331,14 @@ public class MainActivity extends AppCompatActivity {
                                 String str_right_part = text.substring(text.length() - nb_char, text.length());
                                 tv.setText("");
                                 tv.append(str_left_part);
-                                if(str_right_part.contains("-")){
-                                    str_right_part = str_right_part.subSequence(1,str_right_part.length()).toString();
-                                }
-                                else{
-                                    str_right_part = "-"+str_right_part;
+                                if (str_right_part.contains("-")) {
+                                    str_right_part = str_right_part.subSequence(1, str_right_part.length()).toString();
+                                } else {
+                                    str_right_part = "-" + str_right_part;
                                 }
                                 tv.append(str_right_part);
                                 for (int i = 0; i < str_right_part.length(); i++) stack.push(1);
+
                             }
                             else{
                                 String text = tv.getText().toString();
@@ -734,10 +727,11 @@ public class MainActivity extends AppCompatActivity {
                     }
                     break;
                 case R.id.buttonequal:
+                    if(tv.getText().toString().endsWith(".")) break;
                     if(tv.getText().toString().endsWith("E")) tv.setText("Error");
                     else if(tv.getText().toString().endsWith("E-")) tv.setText("Error");
                     else if(parentheses>0){
-                        System.out.println("Not enough right parentheses");
+                        //System.out.println("Not enough right parentheses");
                     }
                     else {
                         String formula = tv.getText().toString();
@@ -769,18 +763,19 @@ public class MainActivity extends AppCompatActivity {
 
                         formula = formula.replace("- -","+"); // helping the calculations
                         ////////////////////////////////////////
-                        System.out.println(formula);
+                        //System.out.println(formula);
                         try {
                             String result = String.valueOf(new ReversePolishNotationEvaluator(new ShuntingJardAlgorithm(formula).evaluate()).evaluate());
                             tv.setText("");
                             if(result.endsWith(".0")) result = result.substring(0,result.length()-2); // deleting .0 a the end of the result
                             if(result.endsWith("NaN")) result = "Error";
                             tv.append(result);
-                            stack.empty();
-                            if(!result.equals("Error")) for(int i = 0;i<result.length();i++) stack.push(1);
+                            stack.clear();
+                            int i=0;
+                            if(!result.equals("Error")) for(i = 0;i<tv.getText().length();i++) stack.push(1);
                             parentheses = 0;
                         } catch (NoSuchElementException e) {
-                            System.out.println("Syntax error!");
+                            //System.out.println("Syntax error!");
                         }
                     }
                     break;
