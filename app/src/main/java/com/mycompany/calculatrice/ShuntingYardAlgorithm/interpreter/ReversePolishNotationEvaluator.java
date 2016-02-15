@@ -4,9 +4,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Stack;
 
-import com.mycompany.calculatrice.BigDecimalMath;
 import com.mycompany.calculatrice.ShuntingYardAlgorithm.lexer.Lexer;
 
 public class ReversePolishNotationEvaluator {
@@ -18,17 +16,17 @@ public class ReversePolishNotationEvaluator {
     }
 	public HashMap<String, Double> context = new HashMap<String, Double>();
 	
-    public Double evaluate() {
+    public Double evaluate() throws NumberFormatException{
 	    System.out.println(bytecode);
 	    String code[] = bytecode.split(" ");
         String instruction;
-	    //double firstOperand, secondOperand;
+	    double firstOperand, secondOperand;
         BigDecimal firstOp, secondOp;
 	    int instructionPointer = 0; //instruction pointer
 	    //System.out.println("IP,\tCode[IP],\tSTACK");
 	    while (instructionPointer < code.length && instructionPointer > -1) {
 		    //System.out.printf("%d,\t%s,\t\t%s\n", instructionPointer, code[instructionPointer], stack);
-			if(stack.peek() == "NaN") return Double.parseDouble("NaN");
+			//if(stack.peek() == "NaN") return cast("NaN");
             instruction = code[instructionPointer++];
 		    if(Lexer.isNumber(instruction)) {
                 stack.push(instruction);
@@ -36,59 +34,59 @@ public class ReversePolishNotationEvaluator {
 			    if (instruction.equals("^")) {
                     secondOp = castBigDecimal(stack.pop());
                     firstOp = castBigDecimal(stack.pop());
-				    stack.push("" + BigDecimalMath.pow(firstOp, secondOp));
+                    stack.push("" + StrictMath.pow(firstOp.doubleValue(), secondOp.doubleValue()));
+
 			    } else if (instruction.equals("/")) {
                     secondOp = castBigDecimal(stack.pop());
                     firstOp = castBigDecimal(stack.pop());
-				    stack.push("" + BigDecimalMath.divideRound(firstOp, secondOp));
+				    stack.push("" + firstOp.divide(secondOp));
 			    } else if (instruction.equals("x")) {
                     secondOp = castBigDecimal(stack.pop());
                     firstOp = castBigDecimal(stack.pop());
-				    stack.push("" + BigDecimalMath.multiplyRound(firstOp, secondOp));
+				    stack.push("" + firstOp.multiply(secondOp));
 			    } else if (instruction.equals("+")) {
                     secondOp = castBigDecimal(stack.pop());
                     firstOp = castBigDecimal(stack.pop());
-				    stack.push("" + BigDecimalMath.addRound(firstOp, secondOp));
+				    stack.push("" + firstOp.add(secondOp));
 			    } else if (instruction.equals("-")) {
                     secondOp = castBigDecimal(stack.pop());
 				    if(stack.peek() != null && Lexer.isNumber(stack.peek())) { // unary minus
                         firstOp = castBigDecimal(stack.pop());
-				    	stack.push("" + BigDecimalMath.subtractRound(firstOp, secondOp));
+				    	stack.push("" + firstOp.subtract(secondOp));
 				    } else {
                         System.out.println("minus");
-				    	stack.push("" + BigDecimalMath.multiplyRound(secondOp, (-1)));
+				    	stack.push("" + secondOp.multiply(new BigDecimal (-1)));
 				    }
-			    }
-                else if (instruction.equals("sin")) {
-		            firstOp = castBigDecimal(stack.pop());
-		            stack.push("" + BigDecimalMath.sin(firstOp));
+			    } else if (instruction.equals("sin")) {
+                    firstOperand = cast(stack.pop());
+		            stack.push("" + Math.sin(firstOperand));
 	            } else if (instruction.equals("cos")) {
-                    firstOp = castBigDecimal(stack.pop());
-		            stack.push("" + BigDecimalMath.cos(firstOp));
+		            firstOperand = cast(stack.pop());
+		            stack.push("" + Math.cos(firstOperand));
 	            } else if (instruction.equals("tan")) {
-                    firstOp = castBigDecimal(stack.pop());
-					stack.push("" + BigDecimalMath.tan(firstOp));
+					firstOperand = cast(stack.pop());
+					stack.push("" + Math.tan(firstOperand));
 				} else if (instruction.equals("Arctan")) {
-                    firstOp = castBigDecimal(stack.pop());
-		            stack.push("" + BigDecimalMath.atan(firstOp));
+		            firstOperand = cast(stack.pop());
+		            stack.push("" + Math.atan(firstOperand));
 	            } else if (instruction.equals("log")) {
-                    firstOp = castBigDecimal(stack.pop());
-		            stack.push("" + BigDecimalMath.log(firstOp));
+		            firstOperand = cast(stack.pop());
+		            stack.push("" + Math.log10(firstOperand));
 	            } else if (instruction.equals("exp")) {
-                    firstOp = castBigDecimal(stack.pop());
-		            stack.push("" + BigDecimalMath.exp(firstOp));
+		            firstOperand = cast(stack.pop());
+		            stack.push("" + Math.exp(firstOperand));
 	            } else if(instruction.equals("Arcsin")){
-                    firstOp = castBigDecimal(stack.pop());
-					stack.push("" + BigDecimalMath.asin(firstOp));
+					firstOperand = cast(stack.pop());
+					stack.push("" + Math.asin(firstOperand));
 				} else if (instruction.equals("Arccos")) {
-                    firstOp = castBigDecimal(stack.pop());
-					stack.push("" + BigDecimalMath.acos(firstOp));
+					firstOperand = cast(stack.pop());
+					stack.push("" + Math.acos(firstOperand));
 				} else if (instruction.equals("ln")) {
-                    firstOp = castBigDecimal(stack.pop());
-					stack.push("" + BigDecimalMath.divideRound(BigDecimalMath.log(firstOp), BigDecimalMath.log(10,new MathContext(1))));
+					firstOperand = cast(stack.pop());
+					stack.push("" + Math.log(firstOperand));
 				} else if (instruction.equals("sqrt")) {
-                    firstOp = castBigDecimal(stack.pop());
-					stack.push("" + BigDecimalMath.sqrt(firstOp));
+					firstOperand = cast(stack.pop());
+					stack.push("" + Math.sqrt(firstOperand));
 				}
 	            /*else if (instruction.equals("ack")) {
 	            	secondOperand = cast(stack.pop());
@@ -103,5 +101,9 @@ public class ReversePolishNotationEvaluator {
         return castBigDecimal(stack.pop()).doubleValue();
     }
 
-	private BigDecimal castBigDecimal(String token){ return new BigDecimal(token);}
+	private BigDecimal castBigDecimal(String token) throws NumberFormatException{ return new BigDecimal(token, new MathContext(10));}
+
+	private Double cast(String token) {
+		return Double.parseDouble(token);
+	}
 }

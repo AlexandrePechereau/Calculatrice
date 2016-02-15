@@ -2,6 +2,7 @@ package com.mycompany.calculatrice;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.RelativeSizeSpan;
@@ -44,9 +45,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         tv = (TextView) findViewById(R.id.textView);
+
         stack = new Stack<>();
         dot = false;
         parentheses = 0;
+
+        //tv.setText(Html.fromHtml("X<sup>2<sup>2</sup></sup>"));
 
         mainll = (LinearLayout) findViewById(R.id.mainLayoutContainer);
         ll1 = (LinearLayout) findViewById(R.id.line1);
@@ -763,19 +767,23 @@ public class MainActivity extends AppCompatActivity {
 
                         formula = formula.replace("- -","+"); // helping the calculations
                         ////////////////////////////////////////
-                        //System.out.println(formula);
+
                         try {
                             String result = String.valueOf(new ReversePolishNotationEvaluator(new ShuntingJardAlgorithm(formula).evaluate()).evaluate());
                             tv.setText("");
                             if(result.endsWith(".0")) result = result.substring(0,result.length()-2); // deleting .0 a the end of the result
-                            if(result.endsWith("NaN")) result = "Error";
                             tv.append(result);
                             stack.clear();
-                            int i=0;
-                            if(!result.equals("Error")) for(i = 0;i<tv.getText().length();i++) stack.push(1);
+                            for(int i = 0;i<tv.getText().length();i++) stack.push(1);
+                            if(tv.getText().toString().contains(".")) dot = true;
+                            else dot = false;
                             parentheses = 0;
-                        } catch (NoSuchElementException e) {
-                            //System.out.println("Syntax error!");
+                        }catch(Exception e) {
+                            tv.setText("");
+                            tv.append("Error");
+                            stack.clear();
+                            dot = false;
+                            parentheses = 0;
                         }
                     }
                     break;
@@ -818,6 +826,8 @@ public class MainActivity extends AppCompatActivity {
 
     private String getPercentage(String nb){
         double val = Double.parseDouble(nb);
-        return String.valueOf((val/100));
+        String result = String.valueOf((val/100));
+        if(result.equals("0.0")) return "0";
+        else return result;
     }
 }
