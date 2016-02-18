@@ -14,19 +14,17 @@ public class ReversePolishNotationEvaluator {
     public ReversePolishNotationEvaluator(String expression) {
         this.bytecode = expression;
     }
-	public HashMap<String, Double> context = new HashMap<String, Double>();
-	
+
     public Double evaluate() throws NumberFormatException{
 	    System.out.println(bytecode);
 	    String code[] = bytecode.split(" ");
         String instruction;
-	    double firstOperand, secondOperand;
+	    double firstOperand;
         BigDecimal firstOp, secondOp;
 	    int instructionPointer = 0; //instruction pointer
 	    //System.out.println("IP,\tCode[IP],\tSTACK");
 	    while (instructionPointer < code.length && instructionPointer > -1) {
 		    //System.out.printf("%d,\t%s,\t\t%s\n", instructionPointer, code[instructionPointer], stack);
-			//if(stack.peek() == "NaN") return cast("NaN");
             instruction = code[instructionPointer++];
 		    if(Lexer.isNumber(instruction)) {
                 stack.push(instruction);
@@ -59,40 +57,35 @@ public class ReversePolishNotationEvaluator {
 				    }
 			    } else if (instruction.equals("sin")) {
                     firstOperand = cast(stack.pop());
-		            stack.push("" + Math.sin(firstOperand));
+		            stack.push("" + StrictMath.sin(firstOperand));
 	            } else if (instruction.equals("cos")) {
 		            firstOperand = cast(stack.pop());
-		            stack.push("" + Math.cos(firstOperand));
+		            stack.push("" + StrictMath.cos(firstOperand));
 	            } else if (instruction.equals("tan")) {
 					firstOperand = cast(stack.pop());
-					stack.push("" + Math.tan(firstOperand));
+					stack.push("" + StrictMath.tan(firstOperand));
 				} else if (instruction.equals("Arctan")) {
 		            firstOperand = cast(stack.pop());
-		            stack.push("" + Math.atan(firstOperand));
+		            stack.push("" + StrictMath.atan(firstOperand));
 	            } else if (instruction.equals("log")) {
 		            firstOperand = cast(stack.pop());
-		            stack.push("" + Math.log10(firstOperand));
+		            stack.push("" + StrictMath.log10(firstOperand));
 	            } else if (instruction.equals("exp")) {
 		            firstOperand = cast(stack.pop());
-		            stack.push("" + Math.exp(firstOperand));
+		            stack.push("" + StrictMath.exp(firstOperand));
 	            } else if(instruction.equals("Arcsin")){
 					firstOperand = cast(stack.pop());
-					stack.push("" + Math.asin(firstOperand));
+					stack.push("" + StrictMath.asin(firstOperand));
 				} else if (instruction.equals("Arccos")) {
 					firstOperand = cast(stack.pop());
-					stack.push("" + Math.acos(firstOperand));
+					stack.push("" + StrictMath.acos(firstOperand));
 				} else if (instruction.equals("ln")) {
 					firstOperand = cast(stack.pop());
-					stack.push("" + Math.log(firstOperand));
+					stack.push("" + StrictMath.log(firstOperand));
 				} else if (instruction.equals("sqrt")) {
 					firstOperand = cast(stack.pop());
-					stack.push("" + Math.sqrt(firstOperand));
+					stack.push("" + StrictMath.sqrt(firstOperand));
 				}
-	            /*else if (instruction.equals("ack")) {
-	            	secondOperand = cast(stack.pop());
-		            firstOperand = cast(stack.pop());
-		            stack.push("" + ackermann(firstOperand, secondOperand));
-	            }*/
 				else {
 		            throw new RuntimeException("Unknown instruction: " + instruction);
 	            }

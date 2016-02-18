@@ -35,21 +35,21 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.10" >
 
-            <Button
+            <com.mycompany.calculatrice.myButton.Buttons.allClearButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="@string/AC"
                 style="?android:attr/borderlessButtonStyle"
                 android:id="@+id/buttonAC" />
 
-            <Button
+            <com.mycompany.calculatrice.myButton.Buttons.clearButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="@string/C"
                 style="?android:attr/borderlessButtonStyle"
                 android:id="@+id/buttonC" />
 
-            <Button
+            <com.mycompany.calculatrice.myButton.Buttons.plusOrMinusButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="+/-"
@@ -57,7 +57,7 @@
                 android:id="@+id/buttonplusorminus"
                 tools:ignore="HardcodedText" />
 
-            <Button
+            <com.mycompany.calculatrice.myButton.Buttons.operationButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="/"
@@ -73,7 +73,7 @@
             android:layout_weight="0.10"
             android:layout_gravity="center_horizontal">
 
-            <Button
+            <com.mycompany.calculatrice.myButton.Buttons.numericalButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="7"
@@ -81,7 +81,7 @@
                 android:id="@+id/button7"
                 tools:ignore="HardcodedText" />
 
-            <Button
+            <com.mycompany.calculatrice.myButton.Buttons.numericalButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="8"
@@ -89,7 +89,7 @@
                 android:id="@+id/button8"
                 tools:ignore="HardcodedText" />
 
-            <Button
+            <com.mycompany.calculatrice.myButton.Buttons.numericalButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="9"
@@ -97,7 +97,7 @@
                 android:id="@+id/button9"
                 tools:ignore="HardcodedText" />
 
-            <Button
+            <com.mycompany.calculatrice.myButton.Buttons.operationButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="x"
@@ -114,7 +114,7 @@
             android:layout_weight="0.10"
             android:layout_gravity="center_horizontal">
 
-            <Button
+            <com.mycompany.calculatrice.myButton.Buttons.numericalButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="4"
@@ -122,7 +122,7 @@
                 android:id="@+id/button4"
                 tools:ignore="HardcodedText" />
 
-            <Button
+            <com.mycompany.calculatrice.myButton.Buttons.numericalButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="5"
@@ -130,7 +130,7 @@
                 android:id="@+id/button5"
                 tools:ignore="HardcodedText" />
 
-            <Button
+            <com.mycompany.calculatrice.myButton.Buttons.numericalButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="6"
@@ -138,7 +138,7 @@
                 android:id="@+id/button6"
                 tools:ignore="HardcodedText" />
 
-            <Button
+            <com.mycompany.calculatrice.myButton.Buttons.operationButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="-"
@@ -154,7 +154,7 @@
             android:layout_weight="0.10"
             android:layout_gravity="center_horizontal">
 
-            <Button
+            <com.mycompany.calculatrice.myButton.Buttons.numericalButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="1"
@@ -162,7 +162,7 @@
                 android:id="@+id/button1"
                 tools:ignore="HardcodedText" />
 
-            <Button
+            <com.mycompany.calculatrice.myButton.Buttons.numericalButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="2"
@@ -170,7 +170,7 @@
                 android:id="@+id/button2"
                 tools:ignore="HardcodedText" />
 
-            <Button
+            <com.mycompany.calculatrice.myButton.Buttons.numericalButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="3"
@@ -178,7 +178,7 @@
                 android:id="@+id/button3"
                 tools:ignore="HardcodedText" />
 
-            <Button
+            <com.mycompany.calculatrice.myButton.Buttons.operationButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="+"
@@ -194,7 +194,7 @@
             android:layout_weight="0.10"
             android:layout_gravity="center_horizontal">
 
-            <Button
+            <com.mycompany.calculatrice.myButton.Buttons.dotButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="."
@@ -202,7 +202,7 @@
                 android:id="@+id/buttondot"
                 tools:ignore="HardcodedText" />
 
-            <Button
+            <com.mycompany.calculatrice.myButton.Buttons.numericalButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="0"
@@ -210,7 +210,7 @@
                 android:id="@+id/button0"
                 tools:ignore="HardcodedText" />
 
-            <Button
+            <com.mycompany.calculatrice.myButton.Buttons.equalButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="="
@@ -218,7 +218,7 @@
                 android:id="@+id/buttonequal"
                 tools:ignore="HardcodedText" />
 
-            <Button
+            <com.mycompany.calculatrice.myButton.Buttons.switchModeButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="more"
@@ -234,7 +234,7 @@
             android:layout_weight="0.10"
             android:layout_gravity="center_horizontal">
 
-            <Button
+            <com.mycompany.calculatrice.myButton.Buttons.allClearButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="AC"
@@ -242,7 +242,7 @@
                 android:id="@+id/buttonAC2"
                 tools:ignore="HardcodedText" />
 
-            <Button
+            <com.mycompany.calculatrice.myButton.Buttons.clearButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="C"
@@ -250,7 +250,7 @@
                 android:id="@+id/buttonC2"
                 tools:ignore="HardcodedText" />
 
-            <Button
+            <com.mycompany.calculatrice.myButton.Buttons.functionButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textAllCaps="false"
@@ -259,7 +259,7 @@
                 android:id="@+id/buttonlog"
                 tools:ignore="HardcodedText" />
 
-            <Button
+            <com.mycompany.calculatrice.myButton.Buttons.functionButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textAllCaps="false"
@@ -277,7 +277,7 @@
             android:layout_weight="0.10"
             android:layout_gravity="center_horizontal">
 
-            <Button
+            <com.mycompany.calculatrice.myButton.Buttons.LPButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="("
@@ -285,7 +285,7 @@
                 android:id="@+id/buttonlp"
                 tools:ignore="HardcodedText" />
 
-            <Button
+            <com.mycompany.calculatrice.myButton.Buttons.RPButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text=")"
@@ -293,7 +293,7 @@
                 android:id="@+id/buttonrp"
                 tools:ignore="HardcodedText" />
 
-            <Button
+            <com.mycompany.calculatrice.myButton.Buttons.functionButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textAllCaps="false"
@@ -302,7 +302,7 @@
                 android:id="@+id/buttonsin"
                 tools:ignore="HardcodedText" />
 
-            <Button
+            <com.mycompany.calculatrice.myButton.Buttons.functionButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textAllCaps="false"
@@ -320,7 +320,7 @@
             android:layout_weight="0.10"
             android:layout_gravity="center_horizontal">
 
-            <Button
+            <com.mycompany.calculatrice.myButton.Buttons.functionButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="√"
@@ -328,16 +328,16 @@
                 android:id="@+id/buttonsquareroot"
                 tools:ignore="HardcodedText" />
 
-            <Button
+            <com.mycompany.calculatrice.myButton.Buttons.powerButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textAllCaps="false"
-                android:text="x^n"
+                android:text="xⁿ"
                 style="?android:attr/borderlessButtonStyle"
                 android:id="@+id/buttonexponent"
                 tools:ignore="HardcodedText" />
 
-            <Button
+            <com.mycompany.calculatrice.myButton.Buttons.functionButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textAllCaps="false"
@@ -346,7 +346,7 @@
                 android:id="@+id/buttoncos"
                 tools:ignore="HardcodedText" />
 
-            <Button
+            <com.mycompany.calculatrice.myButton.Buttons.functionButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textAllCaps="false"
@@ -364,7 +364,7 @@
             android:layout_weight="0.10"
             android:layout_gravity="center_horizontal">
 
-            <Button
+            <com.mycompany.calculatrice.myButton.Buttons.percentButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textAllCaps="false"
@@ -373,16 +373,16 @@
                 android:id="@+id/buttonpercent"
                 tools:ignore="HardcodedText" />
 
-            <Button
+            <com.mycompany.calculatrice.myButton.Buttons.functionButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textAllCaps="false"
                 android:text="Exp"
                 style="?android:attr/borderlessButtonStyle"
-                android:id="@+id/buttoneexp"
+                android:id="@+id/buttonexp"
                 tools:ignore="HardcodedText" />
 
-            <Button
+            <com.mycompany.calculatrice.myButton.Buttons.functionButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textAllCaps="false"
@@ -391,7 +391,7 @@
                 android:id="@+id/buttontan"
                 tools:ignore="HardcodedText" />
 
-            <Button
+            <com.mycompany.calculatrice.myButton.Buttons.functionButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textAllCaps="false"
@@ -409,7 +409,7 @@
             android:layout_weight="0.10"
             android:layout_gravity="center_horizontal">
 
-            <Button
+            <com.mycompany.calculatrice.myButton.Buttons.blankButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textAllCaps="false"
@@ -418,7 +418,7 @@
                 android:id="@+id/buttondec"
                 tools:ignore="HardcodedText" />
 
-            <Button
+            <com.mycompany.calculatrice.myButton.Buttons.blankButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textAllCaps="false"
@@ -427,7 +427,7 @@
                 android:id="@+id/buttonbin"
                 tools:ignore="HardcodedText" />
 
-            <Button
+            <com.mycompany.calculatrice.myButton.Buttons.blankButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textAllCaps="false"
@@ -437,12 +437,12 @@
                 tools:ignore="HardcodedText" />
 
 
-            <Button
+            <com.mycompany.calculatrice.myButton.Buttons.switchModeButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="more"
+                android:text="back"
                 style="?android:attr/borderlessButtonStyle"
-                android:id="@+id/buttonmore2"
+                android:id="@+id/buttonback"
                 tools:ignore="HardcodedText" />
 
         </LinearLayout>
